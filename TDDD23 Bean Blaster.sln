@@ -1,4 +1,3 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDDD23 Bean Blaster", "Assembly-CSharp.csproj", "{5E2AFE2C-AA09-E729-3327-B146B9A0C3EE}"
@@ -19,9 +18,6 @@ Global
 		{71CB55E7-1367-25B4-F0F4-0B82CDF04EAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71CB55E7-1367-25B4-F0F4-0B82CDF04EAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71CB55E7-1367-25B4-F0F4-0B82CDF04EAB}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj

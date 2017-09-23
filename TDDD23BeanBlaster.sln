@@ -1,0 +1,25 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDDD23BeanBlaster", "Assembly-CSharp.csproj", "{487FE374-959F-AB25-CD52-1DA5B009F839}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDDD23BeanBlaster", "Assembly-CSharp-Editor.csproj", "{284DD751-F5DC-9FA9-E166-7B15793790E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{487FE374-959F-AB25-CD52-1DA5B009F839}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{487FE374-959F-AB25-CD52-1DA5B009F839}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{487FE374-959F-AB25-CD52-1DA5B009F839}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{487FE374-959F-AB25-CD52-1DA5B009F839}.Release|Any CPU.Build.0 = Release|Any CPU
+		{284DD751-F5DC-9FA9-E166-7B15793790E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{284DD751-F5DC-9FA9-E166-7B15793790E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{284DD751-F5DC-9FA9-E166-7B15793790E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{284DD751-F5DC-9FA9-E166-7B15793790E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
