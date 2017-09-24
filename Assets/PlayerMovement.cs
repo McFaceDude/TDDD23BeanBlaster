@@ -4,7 +4,20 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-	Vector2 jumpVelocity = new Vector2(0,3);	
+
+	Vector2 vectorToPlanet;
+
+	Vector2 PlanetDirection { get {return vectorToPlanet.normalized;}}
+	float PlanetDistane { get {return vectorToPlanet.magnitude;}}
+	Vector2 PlanetTangentLeft { 
+		get {
+				Vector2 dir = PlanetDirection; 
+				return new Vector2(dir.y, -dir.x);
+			}
+		}
+	Vector2 PlanetTangentRight{get {return -PlanetTangentLeft;}}
+	float moveVeclocity = 2.0f;
+	float jumpVelocity = 3.0f;	
 	Vector2 velocity = Vector2.zero;
 
 	public LayerMask RayMask;
@@ -12,6 +25,9 @@ public class PlayerMovement : MonoBehaviour {
 	public Transform TargetPlanet;
 
 	public bool didJump = false;
+	public bool leftPressed = false;
+
+	public bool rightPressed = false;
 	private Rigidbody2D body;
 
 
@@ -25,44 +41,50 @@ public class PlayerMovement : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.Space)){
 			didJump = true;
 		}
+		if(Input.GetKeyDown(KeyCode.LeftArrow)){
+			leftPressed = true;
+		}
+		if(Input.GetKeyDown(KeyCode.RightArrow)){
+			rightPressed = true;
+		}
+		
 	}
 
 	void FixedUpdate(){
 
-		float gravity = 2.0f;
+		float gravity = 4.0f;
 		
-		Vector2 vectorToPlanet = TargetPlanet.position - transform.position;
-		Vector2 directionToPlanet = vectorToPlanet.normalized;
-		float distanceToPlanet = vectorToPlanet.magnitude;
+		vectorToPlanet = TargetPlanet.position - transform.position;
 
-		velocity += directionToPlanet * gravity * Time.deltaTime;
+		velocity += PlanetDirection * gravity * Time.deltaTime;
 		Debug.DrawRay(transform.position, vectorToPlanet, Color.red);
 
-		if(didJump == true){
-
+		if(didJump){
 			didJump = false;
-			velocity = jumpVelocity;
+			velocity = jumpVelocity * -PlanetDirection;
 		}	
-
-		float raycastDistance = 0.5f + velocity.magnitude * Time.deltaTime;
-		RaycastHit2D hit = Physics2D.Raycast(transform.position, velocity.normalized, raycastDistance, RayMask);
-		Debug.DrawRay(transform.position, velocity.normalized  * (hit ? hit.distance : raycastDistance), Color.yellow);
-	
-		if(hit){
-			velocity = velocity.normalized * (hit.distance - 0.5f) * Time.deltaTime;
+		if(leftPressed){
+			leftPressed = false;
+			velocity = moveVeclocity * PlanetTangentLeft;
+		}
+		if(rightPressed){
+			rightPressed = false;
+			velocity = moveVeclocity * PlanetTangentRight;
 		}
 
+		float raycastDistance = 0.5f + velocity.magnitude * Time.deltaTime;
+		RaycastHit2D hit = Physics2D.Raycast(transform.position, PlanetDirection, raycastDistance, RayMask);
+		Debug.DrawRay(transform.position, PlanetDirection  * (hit ? hit.distance : raycastDistance), Color.yellow);
+		Debug.DrawRay(transform.position, moveVeclocity * PlanetTangentLeft, Color.green);
+		Debug.DrawRay(transform.position, moveVeclocity * PlanetTangentRight, Color.blue);
+		
+		if(hit && Vector2.Dot(PlanetDirection, velocity.normalized) > 0 ){
+			velocity = velocity.normalized * (hit.distance - 0.5f) * Time.deltaTime;
+		}
+		
 		body.position += velocity * Time.deltaTime;
+		body.rotation = Mathf.Rad2Deg * Mathf.Atan2(PlanetDirection.y, PlanetDirection.x) + 90;
 		
 	}
-
-	void OnCollisionStay2D(Collision2D col){
-		print("collision function");
-		
-//		velocity = Vector2.zero;
-//		body.position += velocity * Time.deltaTime;
-
-	}
-
 
 }
