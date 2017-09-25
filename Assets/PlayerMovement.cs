@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	Vector2 vectorToPlanet;
 
-	Vector2 PlanetDirection { get {return vectorToPlanet.normalized;}}
+	public Vector2 PlanetDirection { get {return vectorToPlanet.normalized;}}
 	float PlanetDistane { get {return vectorToPlanet.magnitude;}}
 	Vector2 PlanetTangentLeft { 
 		get {
@@ -15,9 +15,9 @@ public class PlayerMovement : MonoBehaviour {
 				return new Vector2(dir.y, -dir.x);
 			}
 		}
-	Vector2 PlanetTangentRight{get {return -PlanetTangentLeft;}}
-	float moveVeclocity = 2.0f;
-	float jumpVelocity = 3.0f;	
+	Vector2 PlanetTangentRight{ get {return -PlanetTangentLeft;}}
+	float moveVeclocity = 5.0f;
+	float jumpVelocity = 20.0f;	
 	Vector2 velocity = Vector2.zero;
 
 	public LayerMask RayMask;
@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	void FixedUpdate(){
 
-		float gravity = 4.0f;
+		float gravity = 50.0f;
 		
 		vectorToPlanet = TargetPlanet.position - transform.position;
 
@@ -61,15 +61,15 @@ public class PlayerMovement : MonoBehaviour {
 
 		if(didJump){
 			didJump = false;
-			velocity = jumpVelocity * -PlanetDirection;
+			velocity += jumpVelocity * -PlanetDirection;
 		}	
 		if(leftPressed){
 			leftPressed = false;
-			velocity = moveVeclocity * PlanetTangentLeft;
+			velocity += moveVeclocity * PlanetTangentLeft;
 		}
 		if(rightPressed){
 			rightPressed = false;
-			velocity = moveVeclocity * PlanetTangentRight;
+			velocity += moveVeclocity * PlanetTangentRight;
 		}
 
 		float raycastDistance = 0.5f + velocity.magnitude * Time.deltaTime;

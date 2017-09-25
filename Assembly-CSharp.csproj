@@ -54,6 +54,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\CameraMovementOnPlayer.cs" />
      <Compile Include="Assets\MyPhysics2d.cs" />
      <Compile Include="Assets\PlayerMovement.cs" />
  <Reference Include="UnityEngine.CoreModule">
