@@ -7,11 +7,11 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 	Transform planetTf;
 	Transform playerTf;
 	Vector2 planetDirection;
-	
 	GameObject playerGo;
 	float colliderRadius;
 	float planetScale;
 	float planetRadius;
+	float ScalingFactor = 1.1f;
 
 
 	// Use this for initialization
@@ -41,7 +41,6 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 		
 		planetRadius = colliderRadius * planetScale;
 		
-		
 	}
 	
 	// Update is called once per frame
@@ -50,8 +49,8 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 
 		transform.rotation = playerTf.rotation;
 		transform.position = planetTf.position - new Vector3(
-			((planetRadius*planetDirection).x * 1.1f),
-			((planetRadius*planetDirection).y * 1.1f), 
+			((planetRadius*planetDirection).x * ScalingFactor),
+			((planetRadius*planetDirection).y * ScalingFactor), 
 			10);
 		
 	}

@@ -11,12 +11,12 @@ public class PlayerMovement : MonoBehaviour {
 	float PlanetDistane { get {return vectorToPlanet.magnitude;}}
 	Vector2 PlanetTangentLeft { 
 		get {
-				Vector2 dir = PlanetDirection; 
+				Vector2 dir = PlanetDirection;
 				return new Vector2(dir.y, -dir.x);
 			}
 		}
 	Vector2 PlanetTangentRight{ get {return -PlanetTangentLeft;}}
-	float moveVeclocity = 5.0f;
+	float moveVelocity = 10.0f;
 	float jumpVelocity = 20.0f;	
 	Vector2 velocity = Vector2.zero;
 
@@ -30,10 +30,16 @@ public class PlayerMovement : MonoBehaviour {
 	public bool rightPressed = false;
 	private Rigidbody2D body;
 
+	float playerRadius;
+
 
 	// Use this for initialization
 	void Start () {
 		body = GetComponent<Rigidbody2D>();
+		float playerColliderRadius = transform.GetComponent<CircleCollider2D>().radius;
+		float playerScale = transform.localScale.x;
+		playerRadius = playerScale * playerColliderRadius;
+
 	}
 	
 	// Update is called once per frame
@@ -41,45 +47,53 @@ public class PlayerMovement : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.Space)){
 			didJump = true;
 		}
-		if(Input.GetKeyDown(KeyCode.LeftArrow)){
-			leftPressed = true;
-		}
-		if(Input.GetKeyDown(KeyCode.RightArrow)){
-			rightPressed = true;
+		
+		if((Input.GetAxis("Horizontal")) > 0){
+			print(horizontal);
 		}
 		
 	}
 
 	void FixedUpdate(){
 
-		float gravity = 50.0f;
-		
-		vectorToPlanet = TargetPlanet.position - transform.position;
+		GameObject planetGo = GameObject.FindGameObjectWithTag("Planet");
+		if(planetGo == null){
+			Debug.LogError("Could not find a object with tag planet!");
+			return;
+		}
+		float gravity = planetGo.GetComponent<PlanetBigPhysics>().gravity;
 
+		vectorToPlanet = TargetPlanet.position - transform.position;
 		velocity += PlanetDirection * gravity * Time.deltaTime;
-		Debug.DrawRay(transform.position, vectorToPlanet, Color.red);
+
+		//Debug.DrawRay(transform.position, moveVelocity * testVector,  Color.blue);
+		Debug.DrawRay(transform.position, PlanetDirection * gravity,  Color.red);
+		Debug.DrawRay(transform.position, velocity + PlanetTangentLeft * moveVelocity,  Color.yellow);
 
 		if(didJump){
 			didJump = false;
 			velocity += jumpVelocity * -PlanetDirection;
 		}	
 		if(leftPressed){
+
 			leftPressed = false;
-			velocity += moveVeclocity * PlanetTangentLeft;
+			velocity += moveVelocity * PlanetTangentLeft;
+			print(PlanetTangentLeft);
+			print("veclocity: " + velocity);
+			
 		}
 		if(rightPressed){
 			rightPressed = false;
-			velocity += moveVeclocity * PlanetTangentRight;
+			velocity += moveVelocity * PlanetTangentRight;
 		}
 
-		float raycastDistance = 0.5f + velocity.magnitude * Time.deltaTime;
+		float raycastDistance = playerRadius + velocity.magnitude * Time.deltaTime;
 		RaycastHit2D hit = Physics2D.Raycast(transform.position, PlanetDirection, raycastDistance, RayMask);
-		Debug.DrawRay(transform.position, PlanetDirection  * (hit ? hit.distance : raycastDistance), Color.yellow);
-		Debug.DrawRay(transform.position, moveVeclocity * PlanetTangentLeft, Color.green);
-		Debug.DrawRay(transform.position, moveVeclocity * PlanetTangentRight, Color.blue);
 		
 		if(hit && Vector2.Dot(PlanetDirection, velocity.normalized) > 0 ){
-			velocity = velocity.normalized * (hit.distance - 0.5f) * Time.deltaTime;
+			//print(Vector2.Dot(PlanetDirection, velocity.normalized));
+			//print("hit!");
+			velocity = velocity.normalized * (hit.distance - playerRadius) * Time.deltaTime;
 		}
 		
 		body.position += velocity * Time.deltaTime;
