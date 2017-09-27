@@ -51,9 +51,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
      <Compile Include="Assets\Scripts\CameraMovementOnPlayer.cs" />
      <Compile Include="Assets\Scripts\MyPhysics2d.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+=======
+     <Compile Include="Assets\CameraMovementOnPlayer.cs" />
+     <Compile Include="Assets\MyPhysics2d.cs" />
+     <Compile Include="Assets\PlanetBigPhysics.cs" />
+     <Compile Include="Assets\PlayerMovement.cs" />
+>>>>>>> 1f48f535588b5057189fb760e161f5ffcf1e8833
  <Reference Include="UnityEngine.CoreModule">
  <HintPath>/opt/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
  </Reference>
