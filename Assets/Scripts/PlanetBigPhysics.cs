@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlanetBigPhysics : MonoBehaviour {
 
-	public float gravity = 50f;
+	public static float gravity = 50f;
 
 	// Use this for initialization
 	void Start () {
