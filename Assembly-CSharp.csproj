@@ -51,8 +51,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\PlanetBigPhysics.cs" />
      <Compile Include="Assets\Scripts\CameraMovementOnPlayer.cs" />
+     <Compile Include="Assets\Scripts\PlanetBigPhysics.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
  <Reference Include="UnityEngine.CoreModule">
  <HintPath>/opt/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
