@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
 
-	Vector2 vectorToPlanet;
+	Vector2 vectorToPlanet; 
 
 	public Vector2 PlanetDirection { get {return vectorToPlanet.normalized;}}
 	float PlanetDistane { get {return vectorToPlanet.magnitude;}}
@@ -26,7 +26,6 @@ public class PlayerMovement : MonoBehaviour {
 
 	public bool didJump = false;
 	public bool leftPressed = false;
-
 	public bool rightPressed = false;
 	private Rigidbody2D body;
 
@@ -62,11 +61,9 @@ public class PlayerMovement : MonoBehaviour {
 		float gravity = 50.0f;
 
 		vectorToPlanet = TargetPlanet.position - transform.position;
-
 		vectorToPlanet = TargetPlanet.position - transform.position;
 		velocity += PlanetDirection * gravity * Time.deltaTime;
 
-		//Debug.DrawRay(transform.position, moveVelocity * testVector,  Color.blue);
 		Debug.DrawRay(transform.position, PlanetDirection * gravity,  Color.red);
 		Debug.DrawRay(transform.position, velocity + PlanetTangentLeft * moveVelocity,  Color.yellow);
 
