@@ -9,8 +9,7 @@ public class PlayerMovement : MonoBehaviour {
 	public bool didJump = false;
 	public bool leftPressed = false;
 	public bool rightPressed = false;
-	public bool fPressed = false;
-	float groundMoveVelocity = 6.0f;
+	float groundMoveVelocity = 10.0f;
 	float airMoveVelocity = 1.0f;
 	float jumpVelocity = 15.0f;	
 	float playerRadius;
@@ -40,7 +39,7 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//Check for user input
-		if(Input.GetKeyDown(KeyCode.Space) && didJump == false){
+		if(Input.GetKeyDown(KeyCode.Space)){
 			didJump = true;
 		}
 		if(Input.GetKey(KeyCode.LeftArrow)){
@@ -49,7 +48,6 @@ public class PlayerMovement : MonoBehaviour {
 		if(Input.GetKey(KeyCode.RightArrow)){
 			rightPressed = true;
 		}
-		
 	}
 	void FixedUpdate(){
 		//Set the vector to the planet from player.position and velocity of player.
@@ -59,34 +57,38 @@ public class PlayerMovement : MonoBehaviour {
 		//Collison detection with the planet.
 		float raycastDistance = 0.5f + velocity.magnitude * Time.deltaTime;
 		RaycastHit2D hit = Physics2D.Raycast(transform.position, PlanetDirection, raycastDistance, RayMask);
+		Debug.DrawRay(transform.position, PlanetDirection  * (hit ? hit.distance - 0.5f: raycastDistance), Color.yellow);
 		if(hit){
-			velocity = velocity.normalized * (hit.distance - 0.5f) * Time.deltaTime;
+			velocity = velocity.normalized * (hit.distance - 0.5f);
 		}
+
 
 		//Change the volecity if the user has pressed to move the player
 		if(didJump){
 			didJump = false;
-			velocity += jumpVelocity * -PlanetDirection;
+			//Only jump when player is on the ground
+			if (hit){
+				velocity += jumpVelocity * -PlanetDirection;
+			}
+			
 		}	
 		if(leftPressed){
 			leftPressed = false;
-			if(hit){velocity += groundMoveVelocity * PlanetTangentLeft; print("hit move");}
-			else{velocity += airMoveVelocity * PlanetTangentLeft; print("air move");}
-			//print("left pressed"); 
+			if(hit){velocity += groundMoveVelocity * PlanetTangentLeft;}
+			else{velocity += airMoveVelocity * PlanetTangentLeft;}
+		
 		}
 		if(rightPressed){
 			rightPressed = false;
-			if(hit){velocity += groundMoveVelocity * PlanetTangentRight; print("hit move");}
-			else{velocity += airMoveVelocity * PlanetTangentRight; print("air move");}
-			//print("right pressed"); 
+			if(hit){velocity += groundMoveVelocity * PlanetTangentRight;}
+			else{velocity += airMoveVelocity * PlanetTangentRight;}
 		}
 		
-		
 		//Debug vectors
-		Debug.DrawRay(transform.position, PlanetDirection  * (hit ? hit.distance : raycastDistance), Color.yellow);
+		
 		Debug.DrawRay(transform.position, groundMoveVelocity * PlanetTangentLeft, Color.green);
 		Debug.DrawRay(transform.position, groundMoveVelocity * PlanetTangentRight, Color.blue);
-		Debug.DrawRay(transform.position, PlanetDirection * gravity,  Color.red);
+		//Debug.DrawRay(transform.position, PlanetDirection * gravity,  Color.red);
 		//Add the velocity to the position and rotate the player in relation to the planet.
 		body.position += velocity * Time.deltaTime;
 		body.rotation = Mathf.Rad2Deg * Mathf.Atan2(PlanetDirection.y, PlanetDirection.x) + 90;

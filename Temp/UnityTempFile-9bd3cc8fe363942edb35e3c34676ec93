@@ -75,7 +75,6 @@
 -define:UNITY_2017
 -define:PLATFORM_ARCH_64
 -define:UNITY_64
--define:UNITY_ANALYTICS
 -define:ENABLE_AUDIO
 -define:ENABLE_CACHING
 -define:ENABLE_CLOTH
@@ -158,7 +157,7 @@
 -define:ENABLE_NATIVE_ARRAY_CHECKS
 -define:UNITY_TEAM_LICENSE
 Assets/Scripts/CameraMovementOnPlayer.cs
-Assets/Scripts/MyPhysics2d.cs
+Assets/Scripts/PlanetBigPhysics.cs
 Assets/Scripts/PlayerMovement.cs
 -r:/opt/Unity/Editor/Data/Mono/lib/mono/unity/System.Runtime.Serialization.dll
 -r:/opt/Unity/Editor/Data/Mono/lib/mono/unity/System.Xml.Linq.dll
