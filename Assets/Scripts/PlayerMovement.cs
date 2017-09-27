@@ -9,13 +9,13 @@ public class PlayerMovement : MonoBehaviour {
 	public bool didJump = false;
 	public bool leftPressed = false;
 	public bool rightPressed = false;
-
-	float moveVelocity = 10.0f;
-	float jumpVelocity = 20.0f;	
+	public bool fPressed = false;
+	float groundMoveVelocity = 6.0f;
+	float airMoveVelocity = 1.0f;
+	float jumpVelocity = 15.0f;	
 	float playerRadius;
 	float gravity;
 	float PlanetDistane { get {return vectorToPlanet.magnitude;}}
-
 	Vector2 vectorToPlanet; 
 	Vector2 PlanetTangentLeft { 
 		get {
@@ -40,15 +40,16 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//Check for user input
-		if(Input.GetKeyDown(KeyCode.Space)){
+		if(Input.GetKeyDown(KeyCode.Space) && didJump == false){
 			didJump = true;
 		}
-		if(Input.GetKeyDown(KeyCode.LeftArrow)){
+		if(Input.GetKey(KeyCode.LeftArrow)){
 			leftPressed = true;
 		}
-		if(Input.GetKeyDown(KeyCode.RightArrow)){
+		if(Input.GetKey(KeyCode.RightArrow)){
 			rightPressed = true;
 		}
+		
 	}
 	void FixedUpdate(){
 		//Set the vector to the planet from player.position and velocity of player.
@@ -69,17 +70,22 @@ public class PlayerMovement : MonoBehaviour {
 		}	
 		if(leftPressed){
 			leftPressed = false;
-			velocity += moveVelocity * PlanetTangentLeft;	
+			if(hit){velocity += groundMoveVelocity * PlanetTangentLeft; print("hit move");}
+			else{velocity += airMoveVelocity * PlanetTangentLeft; print("air move");}
+			//print("left pressed"); 
 		}
 		if(rightPressed){
 			rightPressed = false;
-			velocity += moveVelocity * PlanetTangentRight;
+			if(hit){velocity += groundMoveVelocity * PlanetTangentRight; print("hit move");}
+			else{velocity += airMoveVelocity * PlanetTangentRight; print("air move");}
+			//print("right pressed"); 
 		}
+		
 		
 		//Debug vectors
 		Debug.DrawRay(transform.position, PlanetDirection  * (hit ? hit.distance : raycastDistance), Color.yellow);
-		Debug.DrawRay(transform.position, moveVelocity * PlanetTangentLeft, Color.green);
-		Debug.DrawRay(transform.position, moveVelocity * PlanetTangentRight, Color.blue);
+		Debug.DrawRay(transform.position, groundMoveVelocity * PlanetTangentLeft, Color.green);
+		Debug.DrawRay(transform.position, groundMoveVelocity * PlanetTangentRight, Color.blue);
 		Debug.DrawRay(transform.position, PlanetDirection * gravity,  Color.red);
 		//Add the velocity to the position and rotate the player in relation to the planet.
 		body.position += velocity * Time.deltaTime;
