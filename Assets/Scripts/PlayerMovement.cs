@@ -50,21 +50,30 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 	void FixedUpdate(){
-		//Set the vector to the planet from player.position and the velocity of player.
+		//Set the vector to the planet from player.position and the velocity of player
 		vectorToPlanet = TargetPlanet.position - transform.position;
 		velocity += PlanetDirection * gravity * Time.deltaTime;
+
+		print("PlanetDirection: " + PlanetDirection);
+		print("gravity: "+ gravity);
+		print("velocity: "+ velocity);
+		
 
 		//Collison detection with the planet.
 		float raycastDistance = playerRadius + velocity.magnitude * Time.deltaTime;
 		RaycastHit2D hit = Physics2D.Raycast(transform.position, PlanetDirection, raycastDistance, RayMask);
-		Debug.DrawRay(transform.position, PlanetDirection  * (hit ? hit.distance - playerRadius: raycastDistance), Color.yellow);
+		Debug.DrawRay(transform.position, PlanetDirection * raycastDistance, Color.yellow);
+		print("Time.deltaTime: " + Time.deltaTime);
+		print("velocity.magnitude: "+ velocity.magnitude);
+		print("playerRadius: " + playerRadius);
+		print("");
 		
 		if(hit){
-			velocity = velocity.normalized * (hit.distance - playerRadius) * Time.deltaTime;
+			velocity = velocity.normalized * (hit.distance - playerRadius) ;
 		}
 
 
-		//Change the volecity if the user has pressed to move the player
+		//Change the volecity if the user has pressed a key to move the player
 		if(didJump){
 			didJump = false;
 			//Only jump when player is on the ground
