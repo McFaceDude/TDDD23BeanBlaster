@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour {
 	public bool didJump = false;
 	public bool leftPressed = false;
 	public bool rightPressed = false;
-	float groundMoveVelocity = 4.0f;
+	float groundMoveVelocity = 1.0f;
 	float airMoveVelocity = 1.0f;
 	float jumpVelocity = 15.0f;	
 	float playerRadius;
@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour {
 		velocity += PlanetDirection * gravity * Time.deltaTime;
 
 		Vector2 xVector = Vector2.Dot(velocity, PlanetTangentRight)*PlanetTangentRight; 
-		Vector2 yVector = velocity -xVector; 
+		Vector2 yVector = velocity - xVector; 
 		//Collison detection with the planet.
 		float raycastDistance = playerRadius + yVector.magnitude * Time.deltaTime;
 		RaycastHit2D hit = Physics2D.Raycast(transform.position, PlanetDirection, raycastDistance, RayMask);
@@ -64,15 +64,13 @@ public class PlayerMovement : MonoBehaviour {
 		//Debug.DrawRay(transform.position, velocity.magnitude * PlanetTangentRight, Color.blue);
 
 		
-		
-		Vector2 testVector = (PlanetDirection * (gravity ) * Time.deltaTime  - PlanetDirection * (raycastDistance + playerRadius)) + velocity;
 		Debug.DrawRay(transform.position, xVector , Color.yellow);
 		Debug.DrawRay(transform.position, yVector , Color.red);
 		Debug.DrawRay(transform.position, velocity , Color.blue);
 		
 		if(hit){
 			//velocity.normalized * (hit.distance - playerRadius)
-			velocity = (xVector  + (hit.distance - playerRadius) *PlanetDirection)   ;
+			velocity = (xVector  + (hit.distance - playerRadius) *PlanetDirection) ;
 		}
 
 
@@ -89,13 +87,21 @@ public class PlayerMovement : MonoBehaviour {
 			if (hit){
 				velocity += groundMoveVelocity * PlanetTangentLeft;
 			}
+			else{
+				velocity += airMoveVelocity * PlanetTangentLeft;
+			}
 		
 		}
 		if(rightPressed){
 			rightPressed = false;
+
 			if (hit){
 				velocity += groundMoveVelocity * PlanetTangentRight;
 			}
+			else{
+				velocity += airMoveVelocity * PlanetTangentRight;
+			}
+
 		}
 		
 		//Debug vectors
@@ -104,7 +110,8 @@ public class PlayerMovement : MonoBehaviour {
 		//Debug.DrawRay(transform.position, PlanetDirection * gravity,  Color.red);
 
 		//Add the velocity to the position and rotate the player in relation to the planet.
-		body.position += velocity * Time.deltaTime;
+		//body.position += velocity * Time.deltaTime;
+		body.velocity = velocity;
 		body.rotation = Mathf.Rad2Deg * Mathf.Atan2(PlanetDirection.y, PlanetDirection.x) + 90;
 	}
 }
