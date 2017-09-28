@@ -10,10 +10,12 @@ public class PlayerMovement : MonoBehaviour {
 	public bool leftPressed = false;
 	public bool rightPressed = false;
 	float groundMoveVelocity = 1.0f;
-	float airMoveVelocity = 1.0f;
-	float jumpVelocity = 15.0f;	
+	float airMoveVelocity = 2.0f;
+	float jumpVelocity = 18.0f;	
 	float playerRadius;
 	float gravity;
+	float planetFriction;
+	float atmosphereFriction;
 	float PlanetDistane { get {return vectorToPlanet.magnitude;}}
 	Vector2 vectorToPlanet; 
 	Vector2 PlanetTangentLeft { 
@@ -30,6 +32,9 @@ public class PlayerMovement : MonoBehaviour {
 	void Start () {
 		//Get the gravity from the planet
 		gravity = PlanetBigPhysics.gravity;
+		planetFriction = PlanetBigPhysics.planetFriction;
+		atmosphereFriction = PlanetBigPhysics.atmosphereFriction;
+
 		//Set the body and size of the player
 		body = GetComponent<Rigidbody2D>();
 		float playerColliderRadius = transform.GetComponent<CircleCollider2D>().radius;
@@ -56,21 +61,21 @@ public class PlayerMovement : MonoBehaviour {
 
 		Vector2 xVector = Vector2.Dot(velocity, PlanetTangentRight)*PlanetTangentRight; 
 		Vector2 yVector = velocity - xVector; 
+
 		//Collison detection with the planet.
 		float raycastDistance = playerRadius + yVector.magnitude * Time.deltaTime;
 		RaycastHit2D hit = Physics2D.Raycast(transform.position, PlanetDirection, raycastDistance, RayMask);
-		//Debug.DrawRay(transform.position, velocity.normalized, Color.yellow);
-		//Debug.DrawRay(transform.position, PlanetDirection * raycastDistance, Color.blue);
-		//Debug.DrawRay(transform.position, velocity.magnitude * PlanetTangentRight, Color.blue);
-
 		
-		Debug.DrawRay(transform.position, xVector , Color.yellow);
-		Debug.DrawRay(transform.position, yVector , Color.red);
-		Debug.DrawRay(transform.position, velocity , Color.blue);
+		//Debug.DrawRay(transform.position, xVector , Color.yellow);
+		//Debug.DrawRay(transform.position, yVector , Color.red);
+		//Debug.DrawRay(transform.position, velocity , Color.blue);
 		
 		if(hit){
 			//velocity.normalized * (hit.distance - playerRadius)
-			velocity = (xVector  + (hit.distance - playerRadius) *PlanetDirection) ;
+			velocity = xVector * planetFriction +  (hit.distance - playerRadius)  * PlanetDirection   ;
+		}
+		else{
+			velocity = xVector * atmosphereFriction + yVector;
 		}
 
 
@@ -102,16 +107,10 @@ public class PlayerMovement : MonoBehaviour {
 				velocity += airMoveVelocity * PlanetTangentRight;
 			}
 
-		}
-		
-		//Debug vectors
-		//Debug.DrawRay(transform.position, velocity, Color.green);
-		//Debug.DrawRay(transform.position, groundMoveVelocity * PlanetTangentRight, Color.blue);
-		//Debug.DrawRay(transform.position, PlanetDirection * gravity,  Color.red);
-
-		//Add the velocity to the position and rotate the player in relation to the planet.
-		//body.position += velocity * Time.deltaTime;
+		}		
+		Debug.DrawRay(transform.position, velocity, Color.red);
 		body.velocity = velocity;
+
 		body.rotation = Mathf.Rad2Deg * Mathf.Atan2(PlanetDirection.y, PlanetDirection.x) + 90;
 	}
 }
