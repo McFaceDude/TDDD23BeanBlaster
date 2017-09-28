@@ -50,16 +50,17 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 	void FixedUpdate(){
-		//Set the vector to the planet from player.position and velocity of player.
+		//Set the vector to the planet from player.position and the velocity of player.
 		vectorToPlanet = TargetPlanet.position - transform.position;
 		velocity += PlanetDirection * gravity * Time.deltaTime;
 
 		//Collison detection with the planet.
-		float raycastDistance = 0.5f + velocity.magnitude * Time.deltaTime;
+		float raycastDistance = playerRadius + velocity.magnitude * Time.deltaTime;
 		RaycastHit2D hit = Physics2D.Raycast(transform.position, PlanetDirection, raycastDistance, RayMask);
-		Debug.DrawRay(transform.position, PlanetDirection  * (hit ? hit.distance - 0.5f: raycastDistance), Color.yellow);
+		Debug.DrawRay(transform.position, PlanetDirection  * (hit ? hit.distance - playerRadius: raycastDistance), Color.yellow);
+		
 		if(hit){
-			velocity = velocity.normalized * (hit.distance - 0.5f);
+			velocity = velocity.normalized * (hit.distance - playerRadius) * Time.deltaTime;
 		}
 
 
@@ -70,7 +71,6 @@ public class PlayerMovement : MonoBehaviour {
 			if (hit){
 				velocity += jumpVelocity * -PlanetDirection;
 			}
-			
 		}	
 		if(leftPressed){
 			leftPressed = false;
@@ -85,10 +85,10 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		
 		//Debug vectors
-		
-		Debug.DrawRay(transform.position, groundMoveVelocity * PlanetTangentLeft, Color.green);
-		Debug.DrawRay(transform.position, groundMoveVelocity * PlanetTangentRight, Color.blue);
+		Debug.DrawRay(transform.position, velocity, Color.green);
+		//Debug.DrawRay(transform.position, groundMoveVelocity * PlanetTangentRight, Color.blue);
 		//Debug.DrawRay(transform.position, PlanetDirection * gravity,  Color.red);
+
 		//Add the velocity to the position and rotate the player in relation to the planet.
 		body.position += velocity * Time.deltaTime;
 		body.rotation = Mathf.Rad2Deg * Mathf.Atan2(PlanetDirection.y, PlanetDirection.x) + 90;
