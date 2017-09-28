@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour {
 	public bool didJump = false;
 	public bool leftPressed = false;
 	public bool rightPressed = false;
-	float groundMoveVelocity = 10.0f;
+	float groundMoveVelocity = 4.0f;
 	float airMoveVelocity = 1.0f;
 	float jumpVelocity = 15.0f;	
 	float playerRadius;
@@ -54,22 +54,25 @@ public class PlayerMovement : MonoBehaviour {
 		vectorToPlanet = TargetPlanet.position - transform.position;
 		velocity += PlanetDirection * gravity * Time.deltaTime;
 
-		print("PlanetDirection: " + PlanetDirection);
-		print("gravity: "+ gravity);
-		print("velocity: "+ velocity);
-		
-
+		Vector2 xVector = Vector2.Dot(velocity, PlanetTangentRight)*PlanetTangentRight; 
+		Vector2 yVector = velocity -xVector; 
 		//Collison detection with the planet.
-		float raycastDistance = playerRadius + velocity.magnitude * Time.deltaTime;
+		float raycastDistance = playerRadius + yVector.magnitude * Time.deltaTime;
 		RaycastHit2D hit = Physics2D.Raycast(transform.position, PlanetDirection, raycastDistance, RayMask);
-		Debug.DrawRay(transform.position, PlanetDirection * raycastDistance, Color.yellow);
-		print("Time.deltaTime: " + Time.deltaTime);
-		print("velocity.magnitude: "+ velocity.magnitude);
-		print("playerRadius: " + playerRadius);
-		print("");
+		//Debug.DrawRay(transform.position, velocity.normalized, Color.yellow);
+		//Debug.DrawRay(transform.position, PlanetDirection * raycastDistance, Color.blue);
+		//Debug.DrawRay(transform.position, velocity.magnitude * PlanetTangentRight, Color.blue);
+
+		
+		
+		Vector2 testVector = (PlanetDirection * (gravity ) * Time.deltaTime  - PlanetDirection * (raycastDistance + playerRadius)) + velocity;
+		Debug.DrawRay(transform.position, xVector , Color.yellow);
+		Debug.DrawRay(transform.position, yVector , Color.red);
+		Debug.DrawRay(transform.position, velocity , Color.blue);
 		
 		if(hit){
-			velocity = velocity.normalized * (hit.distance - playerRadius) ;
+			//velocity.normalized * (hit.distance - playerRadius)
+			velocity = (xVector  + (hit.distance - playerRadius) *PlanetDirection)   ;
 		}
 
 
@@ -83,18 +86,20 @@ public class PlayerMovement : MonoBehaviour {
 		}	
 		if(leftPressed){
 			leftPressed = false;
-			if(hit){velocity += groundMoveVelocity * PlanetTangentLeft;}
-			else{velocity += airMoveVelocity * PlanetTangentLeft;}
+			if (hit){
+				velocity += groundMoveVelocity * PlanetTangentLeft;
+			}
 		
 		}
 		if(rightPressed){
 			rightPressed = false;
-			if(hit){velocity += groundMoveVelocity * PlanetTangentRight;}
-			else{velocity += airMoveVelocity * PlanetTangentRight;}
+			if (hit){
+				velocity += groundMoveVelocity * PlanetTangentRight;
+			}
 		}
 		
 		//Debug vectors
-		Debug.DrawRay(transform.position, velocity, Color.green);
+		//Debug.DrawRay(transform.position, velocity, Color.green);
 		//Debug.DrawRay(transform.position, groundMoveVelocity * PlanetTangentRight, Color.blue);
 		//Debug.DrawRay(transform.position, PlanetDirection * gravity,  Color.red);
 
