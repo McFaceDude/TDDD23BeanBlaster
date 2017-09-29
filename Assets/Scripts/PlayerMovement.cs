@@ -75,6 +75,7 @@ public class PlayerMovement : MonoBehaviour {
 			velocity = xVector * planetFriction +  (hit.distance - playerRadius)  * PlanetDirection   ;
 		}
 		else{
+			print("no hit");
 			velocity = xVector * atmosphereFriction + yVector;
 		}
 
