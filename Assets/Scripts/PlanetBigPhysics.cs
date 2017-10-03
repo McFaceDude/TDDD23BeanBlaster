@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlanetBigPhysics : MonoBehaviour {
 
-	public static float gravity = 30f;
+	public static float gravity = 40f;
 	public static float planetFriction = 0.9f; 
-	public static float atmosphereFriction = 0.98f;
+	public static float atmosphereFriction = 0.95f;
 
 	// Use this for initialization
 	void Start () {

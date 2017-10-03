@@ -1,8 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//Make the the pyhysics part of the player
+//Make another script for the input and cotroll part
+
+
+
 
 public class PlayerMovement : MonoBehaviour {
+
+	bool inGravField;
+	GravField gravField;
 	public Vector2 PlanetDirection { get {return vectorToPlanet.normalized;}}
 	public LayerMask RayMask;
 	public Transform TargetPlanet;
@@ -10,7 +18,7 @@ public class PlayerMovement : MonoBehaviour {
 	public bool leftPressed = false;
 	public bool rightPressed = false;
 	float groundMoveVelocity = 1.0f;
-	float airMoveVelocity = 2.0f;
+	float airMoveVelocity = 1.0f;
 	float jumpVelocity = 18.0f;	
 	float playerRadius;
 	float gravity;
@@ -30,6 +38,8 @@ public class PlayerMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		//Starting inside gravField
+		inGravField = true;
 		//Get the gravity from the planet
 		gravity = PlanetBigPhysics.gravity;
 		planetFriction = PlanetBigPhysics.planetFriction;
@@ -55,17 +65,19 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 	void FixedUpdate(){
+		if(inGravField){	
+		}
+
 		//Set the vector to the planet from player.position and the velocity of player
 		vectorToPlanet = TargetPlanet.position - transform.position;
 		velocity += PlanetDirection * gravity * Time.deltaTime;
-
 		Vector2 xVector = Vector2.Dot(velocity, PlanetTangentRight)*PlanetTangentRight; 
 		Vector2 yVector = velocity - xVector; 
 
+		
 		//Collison detection with the planet.
 		float raycastDistance = playerRadius + yVector.magnitude * Time.deltaTime;
 		RaycastHit2D hit = Physics2D.Raycast(transform.position, PlanetDirection, raycastDistance, RayMask);
-		
 		//Debug.DrawRay(transform.position, xVector , Color.yellow);
 		//Debug.DrawRay(transform.position, yVector , Color.red);
 		//Debug.DrawRay(transform.position, velocity , Color.blue);
@@ -112,5 +124,32 @@ public class PlayerMovement : MonoBehaviour {
 		body.velocity = velocity;
 
 		body.rotation = Mathf.Rad2Deg * Mathf.Atan2(PlanetDirection.y, PlanetDirection.x) + 90;
+	}
+	public void AddVelocity(Vector2 velocity){
+
+	}
+
+	public void SetGravitySource(GravField gravField){
+
+		if (gravField == null){
+			inGravField = false;
+			this.gravity = 0f;
+			this.atmosphereFriction = 0f;
+			this.planetFriction = 0f;
+			//TargetPlanet = null;
+		}
+		// Update values
+		else{
+			inGravField = true;
+			this.gravity = gravField.gravity;
+			this.atmosphereFriction = gravField.atmosphereFriction;
+			this.planetFriction = gravField.planetFriction;
+			TargetPlanet = gravField.transform;
+		}
+	
+		
+
+
+		
 	}
 }
