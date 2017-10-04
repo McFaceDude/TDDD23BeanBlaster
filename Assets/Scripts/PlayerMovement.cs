@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour {
 	public bool rightPressed = false;
 	float groundMoveVelocity = 1.0f;
 	float airMoveVelocity = 1.0f;
-	float jumpVelocity = 18.0f;	
+	float jumpVelocity = 10.0f;	
 	float playerRadius;
 	float gravity;
 	float planetFriction;
@@ -66,6 +66,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	void FixedUpdate(){
 		if(inGravField){	
+			
 		}
 
 		//Set the vector to the planet from player.position and the velocity of player
@@ -87,7 +88,6 @@ public class PlayerMovement : MonoBehaviour {
 			velocity = xVector * planetFriction +  (hit.distance - playerRadius)  * PlanetDirection   ;
 		}
 		else{
-			print("no hit");
 			velocity = xVector * atmosphereFriction + yVector;
 		}
 
@@ -145,7 +145,7 @@ public class PlayerMovement : MonoBehaviour {
 			this.gravity = gravField.gravity;
 			this.atmosphereFriction = gravField.atmosphereFriction;
 			this.planetFriction = gravField.planetFriction;
-			TargetPlanet = gravField.transform;
+			TargetPlanet = gravField.transform.parent;
 		}
 	
 		
