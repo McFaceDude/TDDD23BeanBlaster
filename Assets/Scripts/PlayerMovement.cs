@@ -104,7 +104,10 @@ public class PlayerMovement : MonoBehaviour {
 				else{
 					velocity += airMoveVelocity * PlanetTangentRight;
 				}
-			}		
+			}
+			float planetRadius = TargetPlanet.transform.localScale.x * TargetPlanet.GetComponent<CircleCollider2D>().radius;
+			float t = Mathf.Clamp(1 - (PlanetDistane - planetRadius - playerRadius) * 0.01f, 0, 1);
+			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(PlanetDirection.y, PlanetDirection.x) + 90), t);		
 
 		}
 		//If not in gravField, we are in open space
@@ -122,8 +125,8 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		Debug.DrawRay(transform.position, velocity, Color.red);
 		body.velocity = velocity;
-		body.rotation = Mathf.Rad2Deg * Mathf.Atan2(PlanetDirection.y, PlanetDirection.x) + 90;
-	}
+		
+		}	
 	public void AddVelocity(Vector2 velocity){
 	}
 
