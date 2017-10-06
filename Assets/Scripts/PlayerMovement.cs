@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour {
 	public bool rightPressed = false;
 	float groundMoveVelocity = 0.8f;
 	float airMoveVelocity = 0.8f;
-	float jumpVelocity = 10.0f;	
+	float jumpVelocity = 18.0f;	
 	float playerRadius;
 	float gravity;
 	float planetFriction;
@@ -106,7 +106,8 @@ public class PlayerMovement : MonoBehaviour {
 				}
 			}
 			float planetRadius = TargetPlanet.transform.localScale.x * TargetPlanet.GetComponent<CircleCollider2D>().radius;
-			float t = Mathf.Clamp(1 - (PlanetDistane - planetRadius - playerRadius) * 0.01f, 0, 1);
+			float groundDistance = PlanetDistane - planetRadius - playerRadius;
+			float t = Mathf.Clamp(1 - (groundDistance - (groundDistance * 0.935f)), 0, 1);
 			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(PlanetDirection.y, PlanetDirection.x) + 90), t);		
 
 		}
