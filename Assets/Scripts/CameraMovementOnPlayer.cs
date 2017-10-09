@@ -45,6 +45,7 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 		}
 		else{
 			transform.position =  new Vector3(playerMovement.transform.position.x, playerMovement.transform.position.y, -10);
+			
 		}
 
 		

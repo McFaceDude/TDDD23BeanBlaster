@@ -1,18 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//Make the the pyhysics part of the player
-//Make another script for the input and cotroll part
-
-
-
-
+//Handles the input by the user
 public class PlayerMovement : MonoBehaviour {
-
 	bool inGravField;
-	GravField gravField;
-	public Vector2 PlanetDirection { get {return vectorToPlanet.normalized;}}
-	public LayerMask RayMask;
 	public Transform TargetPlanet;
 	public bool didJump = false;
 	public bool leftPressed = false;
@@ -21,28 +12,13 @@ public class PlayerMovement : MonoBehaviour {
 	float airMoveVelocity = 0.8f;
 	float jumpVelocity = 18.0f;	
 	float playerRadius;
-	float gravity;
-	float planetFriction;
-	float atmosphereFriction;
-	float PlanetDistane { get {return vectorToPlanet.magnitude;}}
-	Vector2 vectorToPlanet; 
-	Vector2 PlanetTangentLeft { 
-		get {
-				Vector2 dir = PlanetDirection;
-				return new Vector2(dir.y, -dir.x);
-			}
-		}
-	Vector2 PlanetTangentRight{ get {return -PlanetTangentLeft;}}
-	Vector2 velocity = Vector2.zero;
-	private Rigidbody2D body;
 
+	PhysicsObject physicsObject;
 	// Use this for initialization
 	void Start () {
 		//Starting inside gravField
-		inGravField = true;
-
-		//Set the body and size of the player
-		body = GetComponent<Rigidbody2D>();
+		
+		physicsObject = GetComponentInChildren<PhysicsObject>();
 		float playerColliderRadius = transform.GetComponent<CircleCollider2D>().radius;
 		float playerScale = transform.localScale.x;
 		playerRadius = playerScale * playerColliderRadius;
@@ -61,91 +37,50 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 	void FixedUpdate(){
-		if(inGravField){	
-			//Set the vector to the planet from player.position and the velocity of player
-			vectorToPlanet = TargetPlanet.position - transform.position;
-			velocity += PlanetDirection * gravity * Time.deltaTime;
-			Vector2 xVector = Vector2.Dot(velocity, PlanetTangentRight)*PlanetTangentRight; 
-			Vector2 yVector = velocity - xVector; 
 
-			//Collison detection with the planet.
-			float raycastDistance = playerRadius + yVector.magnitude * Time.deltaTime;
-			RaycastHit2D hit = Physics2D.Raycast(transform.position, PlanetDirection, raycastDistance, RayMask);
-
-			if(hit){
-				//velocity.normalized * (hit.distance - playerRadius)
-				velocity = xVector * planetFriction +  (hit.distance - playerRadius)  * PlanetDirection   ;
-			}
-			else{
-				velocity = xVector * atmosphereFriction + yVector;
-			}
+		if(physicsObject.IsGrounded){	
 			//Change the volecity if the user has pressed a key to move the player
 			if(didJump){
 				didJump = false;
 				//Only jump when player is on the ground
-				if (hit){
-					velocity += jumpVelocity * -PlanetDirection;
+				if (physicsObject.IsGrounded){
+					physicsObject.addVelocityUp(jumpVelocity);
 				}
 			}	
+			
 			if(leftPressed){
 				leftPressed = false;
-				if (hit){
-					velocity += groundMoveVelocity * PlanetTangentLeft;
+				if (physicsObject.IsGrounded){
+					physicsObject.addVelocityLeft(groundMoveVelocity);
 				}
 				else{
-					velocity += airMoveVelocity * PlanetTangentLeft;
+					physicsObject.addVelocityLeft(airMoveVelocity);
 				}
 			}
 			if(rightPressed){
 				rightPressed = false;
-				if (hit){
-					velocity += groundMoveVelocity * PlanetTangentRight;
+				if (physicsObject.IsGrounded){
+					physicsObject.addVelocityRight(groundMoveVelocity);
 				}
 				else{
-					velocity += airMoveVelocity * PlanetTangentRight;
+					physicsObject.addVelocityRight(airMoveVelocity);
 				}
 			}
-			float planetRadius = TargetPlanet.transform.localScale.x * TargetPlanet.GetComponent<CircleCollider2D>().radius;
-			float groundDistance = PlanetDistane - planetRadius - playerRadius;
-			float t = Mathf.Clamp(1 - (groundDistance - (groundDistance * 0.935f)), 0, 1);
-			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(PlanetDirection.y, PlanetDirection.x) + 90), t);		
-
 		}
 		//If not in gravField, we are in open space
 		else{
 			if(leftPressed){
-				leftPressed = false;
-				
-				velocity += airMoveVelocity * PlanetTangentLeft;
-				}
+				leftPressed = false;	
+				physicsObject.addVelocityLeft(airMoveVelocity);
+			}
+
 			if(rightPressed){
 				rightPressed = false;
-
-				velocity += airMoveVelocity * PlanetTangentRight;
+				physicsObject.addVelocityRight(airMoveVelocity);
 			}		
 		}
-		Debug.DrawRay(transform.position, velocity, Color.red);
-		body.velocity = velocity;
-		
-		}	
-	public void AddVelocity(Vector2 velocity){
-	}
+	}	
+	
 
-	public void SetGravitySource(GravField gravField){
 
-		if (gravField == null){
-			inGravField = false;
-			this.gravity = 0f;
-			this.atmosphereFriction = 0f;
-			this.planetFriction = 0f;
-			TargetPlanet = null;
-		}
-		else{
-			inGravField = true;
-			this.gravity = gravField.gravity;
-			this.atmosphereFriction = gravField.atmosphereFriction;
-			this.planetFriction = gravField.planetFriction;
-			TargetPlanet = gravField.transform.parent;
-		}
-	}
 }

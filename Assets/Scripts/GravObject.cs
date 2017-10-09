@@ -2,32 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//Has the positions of the planet and sets all the vectors for the obejcts effected by gravity and the calls the addVelocity method 
+//Keeps track of the gravField
 
 public class GravObject : MonoBehaviour {
 
-	GravField currentGravField = null;
+	PhysicsObject physicsObject;
 
 	// Use this for initialization
 	void Start () {
-		
+		physicsObject =  GetComponentInParent<PhysicsObject>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
 	}
 
-	//When a obejct enters a gravField, get the gravField
-	void OnTriggerEnter2D(Collider2D gravField){
+	//When a obejct enters a gravField, set the gravField
+	void OnTriggerEnter2D(Collider2D field){
 		print("Collided with gravField");
-		GravField field = gravField.GetComponent<GravField>();
-		GetComponentInParent<PlayerMovement>().SetGravitySource(field); 
+		physicsObject.SetTargetPlanet(field.GetComponent<GravField>());
 	}
-
-	void OnTriggerExit2D(Collider2D gravField){
-		print("Leaving");
-		
-		GetComponentInParent<PlayerMovement>().SetGravitySource(null); 
+	void OnTriggerExit2D(Collider2D field){
+		print("Leaving!");
+		physicsObject.SetTargetPlanet(null);	 
 	}
 }
