@@ -540,9 +540,9 @@ GameObject:
   m_Component:
   - component: {fileID: 752259447}
   - component: {fileID: 752259446}
-  - component: {fileID: 752259449}
   - component: {fileID: 752259448}
   - component: {fileID: 752259450}
+  - component: {fileID: 752259449}
   - component: {fileID: 752259451}
   m_Layer: 9
   m_Name: Player
