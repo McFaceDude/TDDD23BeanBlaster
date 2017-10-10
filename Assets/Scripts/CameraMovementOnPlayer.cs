@@ -5,53 +5,50 @@ using UnityEngine;
 public class CameraMovementOnPlayer : MonoBehaviour {
 
 	Transform planetTf;
-	Transform playerTf;
+	PlayerMovement playerMovement;
 	Vector2 planetDirection;
-	GameObject playerGo;
+
 	float colliderRadius;
 	float planetScale;
 	float planetRadius;
 	float ScalingFactor = 1.1f;
+	
 
 
 	// Use this for initialization
 	void Start () {
-		playerGo = GameObject.FindGameObjectWithTag("Player");
-		if(playerGo == null){
-			Debug.LogError("Could not find a object with tag player!");
-			return;
-		}
-
-		GameObject planetGo = GameObject.FindGameObjectWithTag("Planet");
-		if(planetGo == null){
-			Debug.LogError("Could not find a object with tag planet!");
-			return;
-		}
-
-		if(playerGo == null){
-			Debug.LogError("Could not find a object with tag player!");
-			return;
-		}
-
-		playerTf = playerGo.transform;
-		planetTf = planetGo.transform;
-
+		playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+		planetTf =  playerMovement.TargetPlanet;
 		colliderRadius = planetTf.GetComponent<CircleCollider2D>().radius;
 		planetScale = planetTf.localScale.x;
-		
 		planetRadius = colliderRadius * planetScale;
-		
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		planetDirection = playerGo.GetComponent<PlayerMovement>().PlanetDirection;
+		planetTf =  playerMovement.TargetPlanet;
 
-		transform.rotation = playerTf.rotation;
-		transform.position = planetTf.position - new Vector3(
-			((planetRadius*planetDirection).x * ScalingFactor),
-			((planetRadius*planetDirection).y * ScalingFactor), 
-			10);
+		if(planetTf != null){
+			transform.rotation = playerMovement.transform.rotation;
+			transform.position =  new Vector3(playerMovement.transform.position.x, playerMovement.transform.position.y, -10);
+			/*
+			colliderRadius = planetTf.GetComponent<CircleCollider2D>().radius;
+			planetScale = planetTf.localScale.x;
+			planetRadius = colliderRadius * planetScale;
+			planetDirection = playerMovement.PlanetDirection;
+			transform.rotation = playerMovement.transform.rotation;
+			transform.position = planetTf.position - new Vector3(
+				((planetRadius*planetDirection).x * ScalingFactor),
+				((planetRadius*planetDirection).y * ScalingFactor), 
+				10);
+			 */
+		}
+		else{
+			transform.position =  new Vector3(playerMovement.transform.position.x, playerMovement.transform.position.y, -10);
+			
+		}
+
+		
 		
 	}
 }

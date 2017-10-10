@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\CameraMovementOnPlayer.cs" />
      <Compile Include="Assets\Scripts\GravField.cs" />
      <Compile Include="Assets\Scripts\GravObject.cs" />
+     <Compile Include="Assets\Scripts\PhysicsObject.cs" />
      <Compile Include="Assets\Scripts\PlanetBigPhysics.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
  <Reference Include="UnityEngine.CoreModule">
