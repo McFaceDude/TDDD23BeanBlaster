@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour {
 	public bool rightPressed = false;
 	float groundMoveVelocity = 30f;
 	float airMoveVelocity = 30f;
-	float jumpVelocity = 100f;	
+	float jumpVelocity = 200f;	
 	PhysicsObject physicsObject;
 	// Use this for initialization
 	void Start () {
@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour {
 			leftPressed = true;
 		}
 		if(Input.GetKey(KeyCode.RightArrow)){
-			rightPressed = true;
+			rightPressed = true; 
 		}
 	}
 	void FixedUpdate(){
