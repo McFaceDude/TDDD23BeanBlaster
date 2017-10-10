@@ -37,35 +37,39 @@ public class PhysicsObject : MonoBehaviour {
 		objectRadius = objectScale * objectColliderRadius;
 	}
 	
-	// Update is called once per frame
-	void FixedUpdate () {
+	// UpdatePhysics is called by PlayerMovement after all the player input is done at the end of every FixedUpdate 
+	public void UpdatePhysics() {
 		if(InGravField){
 			
 			vectorToPlanet = targetPlanet.position - transform.position;
 			velocity += PlanetDirection * gravity * Time.deltaTime;
+
 			Vector2 xVector = Vector2.Dot(velocity, PlanetTangentRight)*PlanetTangentRight; 
 			Vector2 yVector = velocity - xVector; 
 
+			float raycastDistance = 0f;
+			if(Vector2.Dot(yVector, PlanetDirection) >= 0){
+				raycastDistance = objectRadius + yVector.magnitude * Time.deltaTime;
+			}
+
 			//Collison detection with the planet.
-			float raycastDistance = objectRadius + yVector.magnitude * Time.deltaTime;
 			RaycastHit2D hit = Physics2D.Raycast(transform.position, PlanetDirection, raycastDistance, RayMask);
-			Debug.DrawRay(body.position, PlanetDirection *raycastDistance, Color.yellow);
+			Debug.DrawRay(body.position, PlanetDirection *(raycastDistance), Color.yellow);
 			IsGrounded = hit;
+			
 			if(hit){
-				print("HIT!");
-				velocity = xVector * planetFriction +  (hit.distance - objectRadius)  * PlanetDirection   ;
+				velocity = xVector * planetFriction + (hit.distance - objectRadius) * PlanetDirection;
 			}
 			else{
 				velocity = xVector * atmosphereFriction + yVector;
 			}
-			
+
+			//Set the rotation of the player to match the planet
 			float groundDistance = planetDistane - planetRadius - objectRadius;
 			float zeroToOne = Mathf.Clamp(1 - (groundDistance - (groundDistance * 0.935f)), 0, 1);
-			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(PlanetDirection.y, PlanetDirection.x) + 90), zeroToOne);		
-
-			body.velocity = velocity;
-			//Debug.DrawRay(body.position, body.velocity, Color.green);
+			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(PlanetDirection.y, PlanetDirection.x) + 90), zeroToOne);
 		}	
+		body.velocity = velocity;
 	}
 	public void addVelocityLeft(float velocity){
 		this.velocity += velocity * PlanetTangentLeft * Time.deltaTime;
@@ -74,6 +78,8 @@ public class PhysicsObject : MonoBehaviour {
 		this.velocity += velocity * PlanetTangentRight * Time.deltaTime;
 	}
 	public void addVelocityUp(float velocity){
+		print(velocity * -PlanetDirection * Time.deltaTime);
+		Debug.DrawRay(body.position, velocity * -PlanetDirection * Time.deltaTime, Color.blue, 4f);
 		this.velocity += velocity * -PlanetDirection * Time.deltaTime;
 	}
 	public void SetTargetPlanet(GravField gravField ){
@@ -84,6 +90,7 @@ public class PhysicsObject : MonoBehaviour {
 			this.planetFriction = gravField.planetFriction;
 			this.atmosphereFriction = gravField.atmosphereFriction;
 			planetRadius = targetPlanet.transform.localScale.x * targetPlanet.GetComponent<CircleCollider2D>().radius;
+			
 		}
 	}
 }
