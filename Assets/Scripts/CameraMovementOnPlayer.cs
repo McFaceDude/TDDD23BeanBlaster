@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraMovementOnPlayer : MonoBehaviour {
 
 	Transform planetTf;
-	PlayerMovement playerMovement;
+	GameObject player;
 	Vector2 planetDirection;
 
 	float colliderRadius;
@@ -17,20 +17,17 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
-		planetTf =  playerMovement.TargetPlanet;
-		colliderRadius = planetTf.GetComponent<CircleCollider2D>().radius;
-		planetScale = planetTf.localScale.x;
-		planetRadius = colliderRadius * planetScale;
+		player = GameObject.FindGameObjectWithTag("Player");
+		planetTf =  player.GetComponent<PhysicsObject>().TargetPlanet;
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		planetTf =  playerMovement.TargetPlanet;
+		planetTf =  player.GetComponent<PhysicsObject>().TargetPlanet;
 
 		if(planetTf != null){
-			transform.rotation = playerMovement.transform.rotation;
-			transform.position =  new Vector3(playerMovement.transform.position.x, playerMovement.transform.position.y, -10);
+			transform.rotation = player.transform.rotation;
+			transform.position =  new Vector3(player.transform.position.x, player.transform.position.y, -10);
 			/*
 			colliderRadius = planetTf.GetComponent<CircleCollider2D>().radius;
 			planetScale = planetTf.localScale.x;
@@ -44,7 +41,7 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 			 */
 		}
 		else{
-			transform.position =  new Vector3(playerMovement.transform.position.x, playerMovement.transform.position.y, -10);
+			transform.position =  new Vector3(player.transform.position.x, player.transform.position.y, -10);
 			
 		}
 

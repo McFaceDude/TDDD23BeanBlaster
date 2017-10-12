@@ -266,7 +266,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -316,7 +316,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.50000006
+  m_Radius: 0.5
 --- !u!114 &596954117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,10 +336,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 688896079}
-  - component: {fileID: 688896080}
-  - component: {fileID: 688896082}
-  - component: {fileID: 688896081}
   - component: {fileID: 688896083}
+  - component: {fileID: 688896080}
+  - component: {fileID: 688896081}
+  - component: {fileID: 688896082}
+  - component: {fileID: 688896084}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -354,7 +355,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 688896078}
   m_LocalRotation: {x: -0, y: -0, z: 0.7452336, w: -0.66680354}
-  m_LocalPosition: {x: 1.938, y: 1.267, z: 0}
+  m_LocalPosition: {x: 2.38, y: 1.16, z: 0}
   m_LocalScale: {x: 0.4426631, y: 0.4426631, z: 0.4426631}
   m_Children:
   - {fileID: 596954114}
@@ -409,7 +410,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RayMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
+  TargetPlanet: {fileID: 0}
 --- !u!212 &688896083
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -454,6 +456,17 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!114 &688896084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 688896078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acde3b45898af4c7ea7e4471b7ae2c39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &691729526
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,7 +477,6 @@ GameObject:
   - component: {fileID: 691729527}
   - component: {fileID: 691729529}
   - component: {fileID: 691729528}
-  - component: {fileID: 691729530}
   m_Layer: 11
   m_Name: GravObject
   m_TagString: Untagged
@@ -505,32 +517,12 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!50 &691729530
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 691729526}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &752259445
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,8 +594,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 752259445}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.13, y: 1.43, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0, y: 1.1, z: 0}
+  m_LocalScale: {x: 0.94592094, y: 1, z: 1}
   m_Children:
   - {fileID: 691729527}
   m_Father: {fileID: 0}
@@ -640,7 +632,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4b1f24810ea24ba38fcb17d72b1cf28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetPlanet: {fileID: 1584259682}
   didJump: 0
   leftPressed: 0
   rightPressed: 0
@@ -673,6 +664,7 @@ MonoBehaviour:
   RayMask:
     serializedVersion: 2
     m_Bits: 256
+  TargetPlanet: {fileID: 0}
 --- !u!1 &1584259678
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,7 +676,6 @@ GameObject:
   - component: {fileID: 1584259681}
   - component: {fileID: 1584259680}
   - component: {fileID: 1584259679}
-  - component: {fileID: 1584259683}
   m_Layer: 8
   m_Name: Planet
   m_TagString: Planet
@@ -785,17 +776,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1584259683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1584259678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97d58572f999f4e0e957ded842cce2e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1626540521
 GameObject:
   m_ObjectHideFlags: 0
@@ -972,7 +952,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
