@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GravField : MonoBehaviour {
 
-	public float gravity = 40f;
-	public float planetFriction = 0.9f; 
-	public float atmosphereFriction = 0.95f;
+	public float gravity = 20f;
+	public float planetFriction = 0.05f; 
+	public float atmosphereFriction = 0.01f;
 	
 }

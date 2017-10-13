@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PhysicsObject : MonoBehaviour {
 	public LayerMask RayMask;
@@ -26,15 +27,19 @@ public class PhysicsObject : MonoBehaviour {
 	public bool IsGrounded { get; private set; }
 	public Transform TargetPlanet;
 
+	public UnityEvent HitEvenet;
+
+	public float FrictionMultiplier = 1;
+
 	public bool InGravField { get {return TargetPlanet != null; }}
 	Rigidbody2D body; 
 	// Use this for initialization
 	void Awake () {
-		print("start");
 		body = GetComponent<Rigidbody2D>();
 		float objectColliderRadius = transform.GetComponent<CircleCollider2D>().radius;
 		float objectScale = transform.localScale.x;
 		objectRadius = objectScale * objectColliderRadius;
+		HitEvenet = new UnityEvent();
 	}
 	
 	// UpdatePhysics is called by PlayerMovement after all the player input is done at the end of every FixedUpdate 
@@ -43,6 +48,7 @@ public class PhysicsObject : MonoBehaviour {
 
 			vectorToPlanet = TargetPlanet.position - transform.position;
 			velocity += PlanetDirection * gravity * Time.deltaTime;
+			Debug.DrawRay(transform.position, PlanetDirection * gravity * Time.deltaTime, Color.yellow, 2f);
 
 			Vector2 xVector = Vector2.Dot(velocity, PlanetTangentRight)*PlanetTangentRight; 
 			Vector2 yVector = velocity - xVector; 
@@ -54,19 +60,15 @@ public class PhysicsObject : MonoBehaviour {
 
 			//Collison detection with the planet.
 			RaycastHit2D hit = Physics2D.Raycast(transform.position, PlanetDirection, raycastDistance, RayMask);
-			
 			IsGrounded = hit;
 			
 			if(hit){
-				
-				velocity = xVector * planetFriction + (hit.distance - objectRadius) * PlanetDirection;
+				HitEvenet.Invoke();
+				velocity = xVector * (1 - planetFriction * FrictionMultiplier) + (hit.distance - objectRadius) * PlanetDirection;
 			}
-			else{
-				
-				velocity = xVector * atmosphereFriction + yVector;
+			else{	
+				velocity = xVector * (1 - atmosphereFriction * FrictionMultiplier)  + yVector;
 			}
-
-			
 		}	
 		body.velocity = velocity;
 	}
@@ -91,12 +93,11 @@ public class PhysicsObject : MonoBehaviour {
 	public void addVelocityRight(float velocity){
 		
 		this.velocity += velocity * PlanetTangentRight * Time.deltaTime;
-		
-		//print("addVelocityRight, velocity = "+ this.velocity + PlanetTangentRight + Time.deltaTime);		
 		UpdateVelocity();
 	}
 	public void addVelocityUp(float velocity){
 		this.velocity += velocity * -PlanetDirection * Time.deltaTime;
+		UpdateVelocity();
 	}
 
 	public void addVelocityVector(Vector2 velocityVector){

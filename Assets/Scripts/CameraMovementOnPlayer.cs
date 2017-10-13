@@ -12,8 +12,6 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 	float planetScale;
 	float planetRadius;
 	float ScalingFactor = 1.1f;
-	
-
 
 	// Use this for initialization
 	void Start () {

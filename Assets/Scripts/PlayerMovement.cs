@@ -10,8 +10,8 @@ public class PlayerMovement : MonoBehaviour {
 	bool didShoot = false;
 
 	float groundMoveVelocity = 80f;
-	float airMoveVelocity = 80f;
-	float jumpVelocity = 200f;	
+	float airMoveVelocity = 30f;
+	float jumpVelocity = 500f;	
 	PhysicsObject physicsObject;
 	public GameObject ProjectilePrefab;
 	// Use this for initialization
@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour {
 		if(Input.GetKey(KeyCode.RightArrow)){
 			rightPressed = true; 
 		}
-		if(Input.GetKey(KeyCode.Space)){
+		if(Input.GetKeyDown(KeyCode.Space)){
 			didShoot = true;
 		}
 	}
@@ -64,11 +64,9 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		if(didShoot){
 			didShoot = false;
-			
 			Instantiate(ProjectilePrefab, transform.position, Quaternion.identity).GetComponent<ProjectileMovement>().SetDirection(transform);
 		}
 		
-		//Call the UpdatePhysics method with any velocity from user input
 		physicsObject.UpdateVelocity();
 		physicsObject.UpdateRotation("player");
 	}	

@@ -112,48 +112,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &49677556
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4303436565799398, guid: d10c22efe8c0a43f0a8d6fcef72993ea, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 2.38
-      objectReference: {fileID: 0}
-    - target: {fileID: 4303436565799398, guid: d10c22efe8c0a43f0a8d6fcef72993ea, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1.16
-      objectReference: {fileID: 0}
-    - target: {fileID: 4303436565799398, guid: d10c22efe8c0a43f0a8d6fcef72993ea, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4303436565799398, guid: d10c22efe8c0a43f0a8d6fcef72993ea, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4303436565799398, guid: d10c22efe8c0a43f0a8d6fcef72993ea, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4303436565799398, guid: d10c22efe8c0a43f0a8d6fcef72993ea, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0.7452336
-      objectReference: {fileID: 0}
-    - target: {fileID: 4303436565799398, guid: d10c22efe8c0a43f0a8d6fcef72993ea, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: -0.66680354
-      objectReference: {fileID: 0}
-    - target: {fileID: 4303436565799398, guid: d10c22efe8c0a43f0a8d6fcef72993ea, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: d10c22efe8c0a43f0a8d6fcef72993ea, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &85291486
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,9 +254,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62bd2f9190ba84f878cb47dc601284fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: 4
-  planetFriction: 0.9
-  atmosphereFriction: 0.95
+  gravity: 20
+  planetFriction: 0.05
+  atmosphereFriction: 0.01
 --- !u!58 &390235522
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -441,7 +399,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 752259445}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 1.1, z: 0}
+  m_LocalPosition: {x: -2.7, y: 1.2, z: 0}
   m_LocalScale: {x: 0.94592094, y: 1, z: 1}
   m_Children:
   - {fileID: 691729527}
@@ -514,6 +472,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   TargetPlanet: {fileID: 0}
+  HitEvenet:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  FrictionMultiplier: 1
 --- !u!1 &1584259678
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,8 +582,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1584259678}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.8, y: -16.5, z: 0}
-  m_LocalScale: {x: 2.0915945, y: 2.0915945, z: 0}
+  m_LocalPosition: {x: 7.54, y: -28.99, z: 0}
+  m_LocalScale: {x: 3.746843, y: 3.746843, z: 0}
   m_Children:
   - {fileID: 390235520}
   m_Father: {fileID: 0}
@@ -741,8 +705,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1626540521}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.08, y: 45.93, z: 0}
-  m_LocalScale: {x: 0.9480598, y: 0.9480598, z: 0}
+  m_LocalPosition: {x: -13.1, y: 45.4, z: 0}
+  m_LocalScale: {x: 0.73110574, y: 0.73110574, z: 0}
   m_Children:
   - {fileID: 2005876673}
   m_Father: {fileID: 0}
@@ -789,9 +753,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62bd2f9190ba84f878cb47dc601284fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: 4
-  planetFriction: 0.9
-  atmosphereFriction: 0.95
+  gravity: 20
+  planetFriction: 0.05
+  atmosphereFriction: 0.01
 --- !u!58 &2005876675
 CircleCollider2D:
   m_ObjectHideFlags: 0
