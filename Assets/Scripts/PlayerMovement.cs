@@ -14,9 +14,13 @@ public class PlayerMovement : MonoBehaviour {
 	float jumpVelocity = 500f;	
 	PhysicsObject physicsObject;
 	public GameObject ProjectilePrefab;
+	SpriteRenderer spriteRenderer;
+
+	bool facingRight{get {return spriteRenderer.flipX; }}
 	// Use this for initialization
 	void Start () {
 		physicsObject = GetComponentInChildren<PhysicsObject>();
+		spriteRenderer = GetComponent<SpriteRenderer>(); 
 	}
 	// Update is called once per frame
 	void Update () {
@@ -46,6 +50,7 @@ public class PlayerMovement : MonoBehaviour {
 		
 		if(leftPressed){
 			leftPressed = false;
+			spriteRenderer.flipX = false;
 			if (physicsObject.IsGrounded){
 				physicsObject.addVelocityLeft(groundMoveVelocity);
 			}
@@ -55,6 +60,7 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		if(rightPressed){
 			rightPressed = false;
+			spriteRenderer.flipX = true;
 			if (physicsObject.IsGrounded){
 				physicsObject.addVelocityRight(groundMoveVelocity);
 			}
@@ -64,7 +70,7 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		if(didShoot){
 			didShoot = false;
-			Instantiate(ProjectilePrefab, transform.position, Quaternion.identity).GetComponent<ProjectileMovement>().SetDirection(transform);
+			Instantiate(ProjectilePrefab, transform.position, Quaternion.identity).GetComponent<ProjectileMovement>().SetDirection(transform, facingRight);
 		}
 		
 		physicsObject.UpdateVelocity();
