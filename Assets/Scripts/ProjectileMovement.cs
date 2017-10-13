@@ -27,7 +27,7 @@ public class ProjectileMovement : MonoBehaviour {
 		Vector2 direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * playerTransform.rotation.eulerAngles.z), Mathf.Sin(Mathf.Deg2Rad * playerTransform.rotation.eulerAngles.z));
 		Debug.DrawRay(this.transform.position, direction * 5, Color.green, 4f);
 		print("projectile direction " + direction);
-		physicsObject.addVelocityVector(direction);
+		physicsObject.addVelocityVector(direction * 20f);
 	}
 
 }

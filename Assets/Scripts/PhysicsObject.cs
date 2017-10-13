@@ -15,7 +15,7 @@ public class PhysicsObject : MonoBehaviour {
 			}
 		}
 	Vector2 PlanetTangentRight{ get {return -PlanetTangentLeft;}}
-	private Rigidbody2D body;
+	
 	float objectRadius;
 	
 	Vector2 velocity = Vector2.zero;
@@ -27,9 +27,10 @@ public class PhysicsObject : MonoBehaviour {
 	public Transform TargetPlanet;
 
 	public bool InGravField { get {return TargetPlanet != null; }}
-
+	Rigidbody2D body; 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
+		print("start");
 		body = GetComponent<Rigidbody2D>();
 		float objectColliderRadius = transform.GetComponent<CircleCollider2D>().radius;
 		float objectScale = transform.localScale.x;
@@ -39,9 +40,7 @@ public class PhysicsObject : MonoBehaviour {
 	// UpdatePhysics is called by PlayerMovement after all the player input is done at the end of every FixedUpdate 
 	public void UpdateVelocity() {
 		if(InGravField){
-		
 
-			
 			vectorToPlanet = TargetPlanet.position - transform.position;
 			velocity += PlanetDirection * gravity * Time.deltaTime;
 
