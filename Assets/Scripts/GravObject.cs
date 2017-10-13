@@ -9,7 +9,7 @@ public class GravObject : MonoBehaviour {
 	PhysicsObject physicsObject;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		physicsObject =  GetComponentInParent<PhysicsObject>();
 	}
 	
@@ -19,11 +19,11 @@ public class GravObject : MonoBehaviour {
 
 	//When a obejct enters a gravField, set the gravField
 	void OnTriggerEnter2D(Collider2D field){
-		print("Collided with gravField");
+		//print("Collided with gravField");
 		physicsObject.SetTargetPlanet(field.GetComponent<GravField>());
 	}
 	void OnTriggerExit2D(Collider2D field){
-		print("Leaving!");
+		//print("Leaving!");
 		physicsObject.SetTargetPlanet(null);	 
 	}
 }

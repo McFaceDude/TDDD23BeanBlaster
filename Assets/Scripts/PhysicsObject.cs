@@ -6,7 +6,6 @@ public class PhysicsObject : MonoBehaviour {
 	public LayerMask RayMask;
 
 	Vector2 vectorToPlanet; 
-	GravField currentGravField = null;
 	float planetDistane { get {return vectorToPlanet.magnitude;}}
 	public Vector2 PlanetDirection { get {return vectorToPlanet.normalized;}}
 	Vector2 PlanetTangentLeft { 
@@ -88,12 +87,22 @@ public class PhysicsObject : MonoBehaviour {
 
 	public void addVelocityLeft(float velocity){
 		this.velocity += velocity * PlanetTangentLeft * Time.deltaTime;
+		UpdateVelocity();
 	}
 	public void addVelocityRight(float velocity){
+		
 		this.velocity += velocity * PlanetTangentRight * Time.deltaTime;
+		
+		//print("addVelocityRight, velocity = "+ this.velocity + PlanetTangentRight + Time.deltaTime);		
+		UpdateVelocity();
 	}
 	public void addVelocityUp(float velocity){
 		this.velocity += velocity * -PlanetDirection * Time.deltaTime;
+	}
+
+	public void addVelocityVector(Vector2 velocityVector){
+		this.velocity += velocityVector;
+		UpdateVelocity();
 	}
 	public void SetTargetPlanet(GravField gravField ){
 
@@ -103,8 +112,8 @@ public class PhysicsObject : MonoBehaviour {
 			this.planetFriction = gravField.planetFriction;
 			this.atmosphereFriction = gravField.atmosphereFriction;
 			planetRadius = TargetPlanet.transform.localScale.x * TargetPlanet.GetComponent<CircleCollider2D>().radius;
-			print("Gravity: " + this.gravity);
-			print("TargetPlanet: "+ TargetPlanet);
+			//print("Gravity: " + this.gravity);
+			//print("TargetPlanet: "+ TargetPlanet);
 			
 		}
 	}

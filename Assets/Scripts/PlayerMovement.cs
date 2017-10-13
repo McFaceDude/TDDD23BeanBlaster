@@ -7,10 +7,13 @@ public class PlayerMovement : MonoBehaviour {
 	public bool didJump = false;
 	public bool leftPressed = false;
 	public bool rightPressed = false;
-	float groundMoveVelocity = 30f;
-	float airMoveVelocity = 30f;
+	bool didShoot = false;
+
+	float groundMoveVelocity = 80f;
+	float airMoveVelocity = 80f;
 	float jumpVelocity = 200f;	
 	PhysicsObject physicsObject;
+	public GameObject ProjectilePrefab;
 	// Use this for initialization
 	void Start () {
 		physicsObject = GetComponentInChildren<PhysicsObject>();
@@ -18,7 +21,7 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//Check for user input
-		if(Input.GetKeyDown(KeyCode.Space)){
+		if(Input.GetKeyDown(KeyCode.UpArrow)){
 			didJump = true;
 		}
 		if(Input.GetKey(KeyCode.LeftArrow)){
@@ -26,6 +29,9 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		if(Input.GetKey(KeyCode.RightArrow)){
 			rightPressed = true; 
+		}
+		if(Input.GetKey(KeyCode.Space)){
+			didShoot = true;
 		}
 	}
 	void FixedUpdate(){
@@ -56,6 +62,12 @@ public class PlayerMovement : MonoBehaviour {
 				physicsObject.addVelocityRight(airMoveVelocity);
 			}
 		}
+		if(didShoot){
+			didShoot = false;
+			
+			Instantiate(ProjectilePrefab, transform.position, Quaternion.identity).GetComponent<ProjectileMovement>().SetDirection(transform);
+		}
+		
 		//Call the UpdatePhysics method with any velocity from user input
 		physicsObject.UpdateVelocity();
 		physicsObject.UpdateRotation("player");
