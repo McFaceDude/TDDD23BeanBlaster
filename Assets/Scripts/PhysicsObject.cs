@@ -63,6 +63,7 @@ public class PhysicsObject : MonoBehaviour {
 			IsGrounded = hit;
 			
 			if(hit){
+				
 				HitEvenet.Invoke();
 				velocity = xVector * (1 - planetFriction * FrictionMultiplier) + (hit.distance - objectRadius) * PlanetDirection;
 			}
@@ -74,7 +75,7 @@ public class PhysicsObject : MonoBehaviour {
 	}
 
 	public void UpdateRotation(string type){
-		if(type == "player"){
+		if(type == "standard"){
 			float groundDistance = planetDistane - planetRadius - objectRadius;
 			float zeroToOne = Mathf.Clamp(1 - (groundDistance - (groundDistance * 0.935f)), 0, 1);
 			transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(PlanetDirection.y, PlanetDirection.x) + 90), zeroToOne);
@@ -112,9 +113,6 @@ public class PhysicsObject : MonoBehaviour {
 			this.planetFriction = gravField.planetFriction;
 			this.atmosphereFriction = gravField.atmosphereFriction;
 			planetRadius = TargetPlanet.transform.localScale.x * TargetPlanet.GetComponent<CircleCollider2D>().radius;
-			//print("Gravity: " + this.gravity);
-			//print("TargetPlanet: "+ TargetPlanet);
-			
 		}
 	}
 }

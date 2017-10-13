@@ -74,6 +74,6 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		
 		physicsObject.UpdateVelocity();
-		physicsObject.UpdateRotation("player");
+		physicsObject.UpdateRotation("standard");
 	}	
 }
