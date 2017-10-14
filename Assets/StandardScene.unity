@@ -417,12 +417,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   TargetPlanet: {fileID: 0}
+  FrictionMultiplier: 0.1
   HitEvenet:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  FrictionMultiplier: 0.1
 --- !u!212 &688896083
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -680,12 +680,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   TargetPlanet: {fileID: 0}
+  FrictionMultiplier: 1
   HitEvenet:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  FrictionMultiplier: 1
 --- !u!1 &1584259678
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,6 +986,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114911714529335426, guid: 5302e0fa9c649e44688e67302a3e57b5,
+        type: 2}
+      propertyPath: HitEvenet.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 452902, guid: 5302e0fa9c649e44688e67302a3e57b5, type: 2}
       propertyPath: m_LocalPosition.x
       value: -3.2
@@ -1040,6 +1045,16 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: a3241346a6ea68740b56f544e2e39bc4, type: 2}
+    - target: {fileID: 114911714529335426, guid: 5302e0fa9c649e44688e67302a3e57b5,
+        type: 2}
+      propertyPath: HitEvenet.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114911714529335426, guid: 5302e0fa9c649e44688e67302a3e57b5,
+        type: 2}
+      propertyPath: HitEvenet.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5302e0fa9c649e44688e67302a3e57b5, type: 2}
   m_IsPrefabParent: 0

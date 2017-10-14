@@ -27,28 +27,31 @@ public class PhysicsObject : MonoBehaviour {
 	public bool IsGrounded { get; private set; }
 	public Transform TargetPlanet;
 
-	public UnityEvent HitEvenet;
+	//public UnityEvent HitEvenet;
 
 	public float FrictionMultiplier = 1;
 
 	public bool InGravField { get {return TargetPlanet != null; }}
 	Rigidbody2D body; 
+	public UnityEvent HitEvenet = new UnityEvent();
 	// Use this for initialization
 	void Awake () {
 		body = GetComponent<Rigidbody2D>();
 		float objectColliderRadius = transform.GetComponent<CircleCollider2D>().radius;
 		float objectScale = transform.localScale.x;
 		objectRadius = objectScale * objectColliderRadius;
-		HitEvenet = new UnityEvent();
+		
 	}
 	
 	// UpdatePhysics is called by PlayerMovement after all the player input is done at the end of every FixedUpdate 
 	public void UpdateVelocity() {
 		if(InGravField){
-
+			//print("Velocity= " + velocity);
+			//print(" ");
 			vectorToPlanet = TargetPlanet.position - transform.position;
 			velocity += PlanetDirection * gravity * Time.deltaTime;
-			Debug.DrawRay(transform.position, PlanetDirection * gravity * Time.deltaTime, Color.yellow, 2f);
+			//Debug.DrawRay(transform.position, velocity, Color.yellow, 2f);
+			//Debug.DrawRay(transform.position, velocity, Color.yellow, 2f);
 
 			Vector2 xVector = Vector2.Dot(velocity, PlanetTangentRight)*PlanetTangentRight; 
 			Vector2 yVector = velocity - xVector; 
@@ -63,15 +66,16 @@ public class PhysicsObject : MonoBehaviour {
 			IsGrounded = hit;
 			
 			if(hit){
-				
-				HitEvenet.Invoke();
 				velocity = xVector * (1 - planetFriction * FrictionMultiplier) + (hit.distance - objectRadius) * PlanetDirection;
+				HitEvenet.Invoke();
 			}
 			else{	
 				velocity = xVector * (1 - atmosphereFriction * FrictionMultiplier)  + yVector;
 			}
 		}	
+		
 		body.velocity = velocity;
+		//print("body.velocity = " + body.velocity);
 	}
 
 	public void UpdateRotation(string type){
@@ -92,12 +96,15 @@ public class PhysicsObject : MonoBehaviour {
 		UpdateVelocity();
 	}
 	public void addVelocityRight(float velocity){
-		
+		//print("PlanetTangentRight = " + PlanetTangentRight);
 		this.velocity += velocity * PlanetTangentRight * Time.deltaTime;
 		UpdateVelocity();
 	}
 	public void addVelocityUp(float velocity){
+		
+		//print("Velocity up" + velocity * -PlanetDirection * Time.deltaTime);
 		this.velocity += velocity * -PlanetDirection * Time.deltaTime;
+		//print("velocity after " + this.velocity);
 		UpdateVelocity();
 	}
 

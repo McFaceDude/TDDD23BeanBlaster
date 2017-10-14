@@ -7,8 +7,8 @@ public class EnemyMovement : MonoBehaviour {
 	PhysicsObject physicsObject;
 	// Use this for initialization
 	void Awake () {
-		print("awake");
-		physicsObject = GetComponent<PhysicsObject>();
+		//print("awake");
+		physicsObject = GetComponentInChildren<PhysicsObject>();
 		physicsObject.HitEvenet.AddListener(Jump);
 	
 	}
@@ -22,8 +22,14 @@ public class EnemyMovement : MonoBehaviour {
 	}
 
 	void Jump(){
-		print("jump");
+		//print("physics obejct "+ physicsObject.FrictionMultiplier);
 		physicsObject.addVelocityUp(300);
-		physicsObject.addVelocityLeft(20);
+		physicsObject.addVelocityRight(50);
+		//print("jump");
+		//physicsObject.addVelocityUp(800);
+		//physicsObject.addVelocityLeft(10);
+		
 	}
+
+	
 }

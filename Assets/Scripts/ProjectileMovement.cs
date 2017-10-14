@@ -43,6 +43,7 @@ public class ProjectileMovement : MonoBehaviour {
 		physicsObject.SetTargetPlanet(field.GetComponent<GravField>());
 	}
 	void onCollisionWithPlanet(){
+		
 		Destroy(gameObject);
 	}
 }
