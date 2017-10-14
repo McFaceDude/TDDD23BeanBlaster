@@ -213,6 +213,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bed8aa2b2a7ae4cea9390e2ea65dd42c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &320603027
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 320603028}
+  - component: {fileID: 320603030}
+  - component: {fileID: 320603029}
+  m_Layer: 12
+  m_Name: CollisionObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &320603028
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 320603027}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.5000727, y: 5.5000157, z: 0}
+  m_LocalScale: {x: 4.729601, y: 5, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2017792106}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &320603029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 320603027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bb567fadf4f84d929f92c8f4db7eaad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisonEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!58 &320603030
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 320603027}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &390235519
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,6 +422,7 @@ Transform:
   m_LocalScale: {x: 0.4426631, y: 0.4426631, z: 0.4426631}
   m_Children:
   - {fileID: 691729527}
+  - {fileID: 1144005765}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -96.358}
@@ -518,9 +580,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 691729526}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b548255cada164021bc7a5578035b1d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 0bb567fadf4f84d929f92c8f4db7eaad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CollisonEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!58 &691729529
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -686,6 +753,67 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!1 &1144005764
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1144005765}
+  - component: {fileID: 1144005767}
+  - component: {fileID: 1144005766}
+  m_Layer: 12
+  m_Name: CollisionObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1144005765
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1144005764}
+  m_LocalRotation: {x: -0, y: 0, z: -0.7452336, w: -0.66680354}
+  m_LocalPosition: {x: -23.761347, y: 123.687614, z: 0}
+  m_LocalScale: {x: 2.136885, y: 2.2590544, z: 2.2590542}
+  m_Children: []
+  m_Father: {fileID: 688896079}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1144005766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1144005764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bb567fadf4f84d929f92c8f4db7eaad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisonEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!58 &1144005767
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1144005764}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &1584259678
 GameObject:
   m_ObjectHideFlags: 0
@@ -1058,3 +1186,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5302e0fa9c649e44688e67302a3e57b5, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &2017792106 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 452902, guid: 5302e0fa9c649e44688e67302a3e57b5, type: 2}
+  m_PrefabInternal: {fileID: 2017792105}

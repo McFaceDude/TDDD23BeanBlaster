@@ -5,7 +5,9 @@ using UnityEngine;
 public class ProjectileMovement : MonoBehaviour {
 
 	PhysicsObject physicsObject;
-
+	
+	CollisionObject collisionObject;
+	GameObject collisionObject2;
 	float projectileForce = 25;
 
 	Transform playerTransform;
@@ -13,8 +15,17 @@ public class ProjectileMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		physicsObject = GetComponentInChildren<PhysicsObject>();
+		physicsObject = GetComponent<PhysicsObject>();
+		//collisionObject = GetComponentInChildren<CollisionObject>();
+		//collisionObject =  GameObject.FindGameObjectWithTag("CollisionObject").GetComponent<CollisionObject>();
+		//collisionObject = collisionObject.transform.GetChild(0).GetComponent<CollisionObject>();
+		
+		if(collisionObject == null){
+			print("Its null!");
+		}
+		
 		physicsObject.HitEvenet.AddListener(onCollisionWithPlanet);
+
 	}
 	
 	// Update is called once per frame

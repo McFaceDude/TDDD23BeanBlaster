@@ -54,10 +54,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Graphics\Match 3 - Dark Monsters - Infinite Monster Builder\EditorPopup\Editor\Autorun.cs" />
-     <Compile Include="Assets\Graphics\Match 3 - Dark Monsters - Infinite Monster Builder\EditorPopup\Editor\DGChecker.cs" />
-     <Compile Include="Assets\Graphics\Match 3 - Dark Monsters - Infinite Monster Builder\EditorPopup\Editor\PlatformTools.cs" />
-     <Compile Include="Assets\Graphics\Match 3 - Dark Monsters - Infinite Monster Builder\EditorPopup\Editor\Welcome.cs" />
      <Compile Include="Assets\VSCode\Plugins\Editor\VSCode.cs" />
  <Reference Include="UnityEngine.CoreModule">
  <HintPath>/opt/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
