@@ -8,7 +8,8 @@ public class ProjectileMovement : MonoBehaviour {
 	
 	CollisionObject collisionObject;
 	//GameObject collisionObject2;
-	float projectileForce = 25;
+	float projectileForce = 12;
+	float projectileAngle = 20;
 
 	Transform playerTransform;
 	Vector2 direction;
@@ -33,13 +34,16 @@ public class ProjectileMovement : MonoBehaviour {
 	public void SetDirection(Transform playerTransform, bool facingRight){
 		this.playerTransform = playerTransform;
 		if(facingRight){
-			direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * playerTransform.rotation.eulerAngles.z), Mathf.Sin(Mathf.Deg2Rad * playerTransform.rotation.eulerAngles.z));
+			direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * (playerTransform.rotation.eulerAngles.z + projectileAngle)), Mathf.Sin(Mathf.Deg2Rad * (playerTransform.rotation.eulerAngles.z + projectileAngle)));
 		}
 		else {
-			direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * (playerTransform.rotation.eulerAngles.z + 180)), Mathf.Sin(Mathf.Deg2Rad * (playerTransform.rotation.eulerAngles.z + 180)));
+			direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * (playerTransform.rotation.eulerAngles.z + 180 - projectileAngle)), Mathf.Sin(Mathf.Deg2Rad * (playerTransform.rotation.eulerAngles.z + 180 - projectileAngle)));
 		}
-		
-		Debug.DrawRay(this.transform.position, direction * projectileForce, Color.green, 4f);
+
+
+		//TODO add velocity of player to initial velocity of projectile
+
+
 		physicsObject.addVelocityVector(direction * projectileForce);
 		
 		//physicsObject.addVelocityVector(direction * projectileForce);
@@ -50,12 +54,12 @@ public class ProjectileMovement : MonoBehaviour {
 		physicsObject.SetTargetPlanet(field.GetComponent<GravField>());
 	}
 	void onCollisionWithPlanet(){
-		print("collided with planet");
+		//print("collided with planet");
 		Destroy(gameObject);
 	}
 
 	void onCollisionWithEnemy(){
-		print("collided with enemy");
+		//print("collided with enemy");
 		Destroy(gameObject);
 	}
 }

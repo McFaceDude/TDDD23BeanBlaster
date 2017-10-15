@@ -9,13 +9,13 @@ public class PhysicsObject : MonoBehaviour {
 	Vector2 vectorToPlanet; 
 	float planetDistane { get {return vectorToPlanet.magnitude;}}
 	public Vector2 PlanetDirection { get {return vectorToPlanet.normalized;}}
-	Vector2 PlanetTangentLeft { 
+	public Vector2 PlanetTangentLeft { 
 		get {
 				Vector2 dir = PlanetDirection;
 				return new Vector2(dir.y, -dir.x);
 			}
 		}
-	Vector2 PlanetTangentRight{ get {return -PlanetTangentLeft;}}
+	public Vector2 PlanetTangentRight{ get {return -PlanetTangentLeft;}}
 	
 	float objectRadius;
 	

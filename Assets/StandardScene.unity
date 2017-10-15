@@ -222,11 +222,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4638936248268804, guid: d10c22efe8c0a43f0a8d6fcef72993ea, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5.39
+      value: 5.179
       objectReference: {fileID: 0}
     - target: {fileID: 4638936248268804, guid: d10c22efe8c0a43f0a8d6fcef72993ea, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.32
+      value: 2.584
       objectReference: {fileID: 0}
     - target: {fileID: 4638936248268804, guid: d10c22efe8c0a43f0a8d6fcef72993ea, type: 2}
       propertyPath: m_LocalPosition.z
@@ -441,8 +441,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 752259445}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.46, y: 1.32, z: 0}
-  m_LocalScale: {x: 0.94592094, y: 1, z: 1}
+  m_LocalPosition: {x: 7.18, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 471576409}
   m_Father: {fileID: 0}
@@ -484,6 +484,11 @@ MonoBehaviour:
   rightPressed: 0
   ProjectilePrefab: {fileID: 1357737594784804, guid: d10c22efe8c0a43f0a8d6fcef72993ea,
     type: 2}
+  PlayerCollisionEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!58 &752259450
 CircleCollider2D:
   m_ObjectHideFlags: 0

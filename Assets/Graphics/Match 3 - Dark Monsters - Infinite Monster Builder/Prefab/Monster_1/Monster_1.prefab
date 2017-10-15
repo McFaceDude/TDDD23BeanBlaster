@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 58126029696175612}
   - component: {fileID: 114574698491283730}
   - component: {fileID: 50409441716527812}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Monster_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -725,7 +725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb567fadf4f84d929f92c8f4db7eaad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisonEvent:
+  CollisionEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,

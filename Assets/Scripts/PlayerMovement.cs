@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 //Handles the input by the user
 public class PlayerMovement : MonoBehaviour {
 
@@ -11,16 +12,24 @@ public class PlayerMovement : MonoBehaviour {
 
 	float groundMoveVelocity = 80f;
 	float airMoveVelocity = 30f;
-	float jumpVelocity = 500f;	
+	float jumpVelocity = 600f;	
 	PhysicsObject physicsObject;
 	public GameObject ProjectilePrefab;
 	SpriteRenderer spriteRenderer;
+	float collisionPushback = 15;
+	ProjectileMovement projectileMovement;
+	float projectileRadius;
+	float playerRadius;
+	public UnityEvent PlayerCollisionEvent = new UnityEvent();
 
 	bool facingRight{get {return spriteRenderer.flipX; }}
 	// Use this for initialization
 	void Start () {
 		physicsObject = GetComponent<PhysicsObject>();
 		spriteRenderer = GetComponent<SpriteRenderer>(); 
+		projectileMovement = GameObject.FindGameObjectWithTag("Projectile").GetComponent<ProjectileMovement>();
+		projectileRadius = projectileMovement.transform.localScale.x * projectileMovement.transform.GetComponent<CircleCollider2D>().radius;
+		playerRadius = transform.localScale.x * transform.GetComponent<CircleCollider2D>().radius;
 	}
 	// Update is called once per frame
 	void Update () {
@@ -70,10 +79,41 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		if(didShoot){
 			didShoot = false;
-			Instantiate(ProjectilePrefab, transform.position, Quaternion.identity).GetComponent<ProjectileMovement>().SetDirection(transform, facingRight);
+			Instantiate(ProjectilePrefab, transform.position + projectileStartingPos() , Quaternion.identity).GetComponent<ProjectileMovement>().SetDirection(transform, facingRight);
 		}
 		
 		physicsObject.UpdateVelocity();
 		physicsObject.UpdateRotation("standard");
 	}	
+
+	Vector3 projectileStartingPos(){
+		
+		if(facingRight){
+			Vector2 startingPos = physicsObject.PlanetTangentRight.normalized * (projectileRadius + playerRadius) * 1.00001f;
+			return new Vector3(startingPos.x, startingPos.y, 0);
+		}
+		else{
+			Vector2 startingPos = physicsObject.PlanetTangentLeft.normalized * (projectileRadius + playerRadius) * 1.00001f;
+			return new Vector3(startingPos.x, startingPos.y, 0);
+		}
+	}
+
+	Vector2 vectorFromPosition(Transform fromTransform){
+		return new Vector2(transform.position.x - fromTransform.position.x, transform.position.y - fromTransform.position.y);
+	}
+
+	void collidedWithHostile(Collider2D collider2D){
+
+		Vector2 collisionVector = vectorFromPosition(collider2D.transform);
+		physicsObject.addVelocityVector(collisionVector * collisionPushback);
+	}
+
+	void OnTriggerEnter2D(Collider2D collider2D){
+		
+		if (collider2D.name != "GravField"){
+			PlayerCollisionEvent.Invoke();
+			collidedWithHostile(collider2D);
+		}
+		
+	}
 }
