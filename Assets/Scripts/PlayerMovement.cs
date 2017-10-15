@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour {
 	bool facingRight{get {return spriteRenderer.flipX; }}
 	// Use this for initialization
 	void Start () {
-		physicsObject = GetComponentInChildren<PhysicsObject>();
+		physicsObject = GetComponent<PhysicsObject>();
 		spriteRenderer = GetComponent<SpriteRenderer>(); 
 	}
 	// Update is called once per frame

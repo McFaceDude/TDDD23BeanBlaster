@@ -50,7 +50,7 @@ public class PhysicsObject : MonoBehaviour {
 			//print(" ");
 			vectorToPlanet = TargetPlanet.position - transform.position;
 			velocity += PlanetDirection * gravity * Time.deltaTime;
-			//Debug.DrawRay(transform.position, velocity, Color.yellow, 2f);
+			
 			//Debug.DrawRay(transform.position, velocity, Color.yellow, 2f);
 
 			Vector2 xVector = Vector2.Dot(velocity, PlanetTangentRight)*PlanetTangentRight; 
@@ -73,7 +73,7 @@ public class PhysicsObject : MonoBehaviour {
 				velocity = xVector * (1 - atmosphereFriction * FrictionMultiplier)  + yVector;
 			}
 		}	
-		
+		//Debug.DrawRay(transform.position, vectorToPlanet, Color.yellow, 2f);
 		body.velocity = velocity;
 		//print("body.velocity = " + body.velocity);
 	}

@@ -8,8 +8,9 @@ public class EnemyMovement : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		//print("awake");
-		physicsObject = GetComponentInChildren<PhysicsObject>();
+		physicsObject = GetComponent<PhysicsObject>();
 		physicsObject.HitEvenet.AddListener(Jump);
+		GravObject gravObject = GetComponentInChildren<GravObject>();
 	
 	}
 	

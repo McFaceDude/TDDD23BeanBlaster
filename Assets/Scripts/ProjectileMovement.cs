@@ -7,7 +7,7 @@ public class ProjectileMovement : MonoBehaviour {
 	PhysicsObject physicsObject;
 	
 	CollisionObject collisionObject;
-	GameObject collisionObject2;
+	//GameObject collisionObject2;
 	float projectileForce = 25;
 
 	Transform playerTransform;
@@ -16,15 +16,11 @@ public class ProjectileMovement : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		physicsObject = GetComponent<PhysicsObject>();
-		//collisionObject = GetComponentInChildren<CollisionObject>();
-		//collisionObject =  GameObject.FindGameObjectWithTag("CollisionObject").GetComponent<CollisionObject>();
-		//collisionObject = collisionObject.transform.GetChild(0).GetComponent<CollisionObject>();
+		collisionObject = GetComponentInChildren<CollisionObject>();
 		
-		if(collisionObject == null){
-			print("Its null!");
-		}
-		
+		//Add listeners 
 		physicsObject.HitEvenet.AddListener(onCollisionWithPlanet);
+		collisionObject.CollisionEvent.AddListener(onCollisionWithEnemy);
 
 	}
 	
@@ -54,7 +50,12 @@ public class ProjectileMovement : MonoBehaviour {
 		physicsObject.SetTargetPlanet(field.GetComponent<GravField>());
 	}
 	void onCollisionWithPlanet(){
-		
+		print("collided with planet");
+		Destroy(gameObject);
+	}
+
+	void onCollisionWithEnemy(){
+		print("collided with enemy");
 		Destroy(gameObject);
 	}
 }

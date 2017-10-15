@@ -10,6 +10,7 @@ public class GravObject : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+		//print("Grav Objects parent: " + GetComponentInParent<ProjectileMovement>());
 		physicsObject =  GetComponentInParent<PhysicsObject>();
 	}
 	

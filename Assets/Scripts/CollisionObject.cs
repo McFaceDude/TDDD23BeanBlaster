@@ -6,10 +6,11 @@ using UnityEngine;
 public class CollisionObject : MonoBehaviour {
 
 	
-	public UnityEvent CollisonEvent = new UnityEvent();
+	public UnityEvent CollisionEvent = new UnityEvent();
 
 	// Use this for initialization
 	void Awake () {
+		
 		
 	}
 	
@@ -21,7 +22,7 @@ public class CollisionObject : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D field){
 		//print("Collided with gravField");
 		print("collided with something");
-		CollisonEvent.Invoke();
+		CollisionEvent.Invoke();
 	}
 	
 }
