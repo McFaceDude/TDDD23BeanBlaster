@@ -79,6 +79,7 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		if(didShoot){
 			didShoot = false;
+			print("player velocity-magniture = "+ physicsObject.Velocity.magnitude);
 			Instantiate(ProjectilePrefab, transform.position + projectileStartingPos() , Quaternion.identity).GetComponent<ProjectileMovement>().SetDirection(transform, facingRight);
 		}
 		
@@ -109,7 +110,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D collider2D){
-		print("player collided with: " + collider2D.name);
+		//print("player collided with: " + collider2D.name);
 		if (collider2D.name != "GravField" && collider2D.name != "EnemyTrigger"){
 			PlayerCollisionEvent.Invoke();
 			collidedWithHostile(collider2D);

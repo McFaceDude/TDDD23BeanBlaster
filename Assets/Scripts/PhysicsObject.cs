@@ -19,7 +19,7 @@ public class PhysicsObject : MonoBehaviour {
 	
 	float objectRadius;
 	
-	Vector2 velocity = Vector2.zero;
+	public Vector2 Velocity = Vector2.zero;
 	float gravity;
 	float planetFriction;
 	float atmosphereFriction;
@@ -49,12 +49,12 @@ public class PhysicsObject : MonoBehaviour {
 			//print("Velocity= " + velocity);
 			//print(" ");
 			vectorToPlanet = TargetPlanet.position - transform.position;
-			velocity += PlanetDirection * gravity * Time.deltaTime;
+			Velocity += PlanetDirection * gravity * Time.deltaTime;
 			
 			//Debug.DrawRay(transform.position, velocity, Color.yellow, 2f);
 
-			Vector2 xVector = Vector2.Dot(velocity, PlanetTangentRight)*PlanetTangentRight; 
-			Vector2 yVector = velocity - xVector; 
+			Vector2 xVector = Vector2.Dot(Velocity, PlanetTangentRight)*PlanetTangentRight; 
+			Vector2 yVector = Velocity - xVector; 
 
 			float raycastDistance = 0f;
 			if(Vector2.Dot(yVector, PlanetDirection) >= 0){
@@ -66,15 +66,15 @@ public class PhysicsObject : MonoBehaviour {
 			IsGrounded = hit;
 			
 			if(hit){
-				velocity = xVector * (1 - planetFriction * FrictionMultiplier) + (hit.distance - objectRadius) * PlanetDirection;
+				Velocity = xVector * (1 - planetFriction * FrictionMultiplier) + (hit.distance - objectRadius) * PlanetDirection;
 				HitEvenet.Invoke();
 			}
 			else{	
-				velocity = xVector * (1 - atmosphereFriction * FrictionMultiplier)  + yVector;
+				Velocity = xVector * (1 - atmosphereFriction * FrictionMultiplier)  + yVector;
 			}
 		}	
 		//Debug.DrawRay(transform.position, vectorToPlanet, Color.yellow, 2f);
-		body.velocity = velocity;
+		body.velocity = Velocity;
 		//print("body.velocity = " + body.velocity);
 	}
 
@@ -92,24 +92,24 @@ public class PhysicsObject : MonoBehaviour {
 	}
 
 	public void addVelocityLeft(float velocity){
-		this.velocity += velocity * PlanetTangentLeft * Time.deltaTime;
+		this.Velocity += velocity * PlanetTangentLeft * Time.deltaTime;
 		UpdateVelocity();
 	}
 	public void addVelocityRight(float velocity){
 		//print("PlanetTangentRight = " + PlanetTangentRight);
-		this.velocity += velocity * PlanetTangentRight * Time.deltaTime;
+		this.Velocity += velocity * PlanetTangentRight * Time.deltaTime;
 		UpdateVelocity();
 	}
 	public void addVelocityUp(float velocity){
 		
 		//print("Velocity up" + velocity * -PlanetDirection * Time.deltaTime);
-		this.velocity += velocity * -PlanetDirection * Time.deltaTime;
+		this.Velocity += velocity * -PlanetDirection * Time.deltaTime;
 		//print("velocity after " + this.velocity);
 		UpdateVelocity();
 	}
 
 	public void addVelocityVector(Vector2 velocityVector){
-		this.velocity += velocityVector;
+		this.Velocity += velocityVector;
 		UpdateVelocity();
 	}
 	public void SetTargetPlanet(GravField gravField ){

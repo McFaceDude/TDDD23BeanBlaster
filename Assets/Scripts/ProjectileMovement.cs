@@ -33,6 +33,7 @@ public class ProjectileMovement : MonoBehaviour {
 
 	public void SetDirection(Transform playerTransform, bool facingRight){
 		this.playerTransform = playerTransform;
+		float playerSpeed = this.playerTransform.GetComponent<PhysicsObject>().Velocity.magnitude;
 		if(facingRight){
 			direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * (playerTransform.rotation.eulerAngles.z + projectileAngle)), Mathf.Sin(Mathf.Deg2Rad * (playerTransform.rotation.eulerAngles.z + projectileAngle)));
 		}
@@ -44,7 +45,7 @@ public class ProjectileMovement : MonoBehaviour {
 		//TODO add velocity of player to initial velocity of projectile
 
 
-		physicsObject.addVelocityVector(direction * projectileForce);
+		physicsObject.addVelocityVector(direction * (projectileForce + playerSpeed * 0.5f));
 		
 		//physicsObject.addVelocityVector(direction * projectileForce);
 	}
