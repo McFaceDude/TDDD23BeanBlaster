@@ -109,8 +109,8 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D collider2D){
-		
-		if (collider2D.name != "GravField"){
+		print("player collided with: " + collider2D.name);
+		if (collider2D.name != "GravField" && collider2D.name != "EnemyTrigger"){
 			PlayerCollisionEvent.Invoke();
 			collidedWithHostile(collider2D);
 		}

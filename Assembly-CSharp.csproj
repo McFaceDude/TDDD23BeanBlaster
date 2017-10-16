@@ -57,6 +57,7 @@
      <Compile Include="Assets\Graphics\Match 3 - Dark Monsters - Infinite Monster Builder\Scritps\OrderPrefabs.cs" />
      <Compile Include="Assets\Scripts\CameraMovementOnPlayer.cs" />
      <Compile Include="Assets\Scripts\CollisionObject.cs" />
+     <Compile Include="Assets\Scripts\DetectionField.cs" />
      <Compile Include="Assets\Scripts\EnemyMovement.cs" />
      <Compile Include="Assets\Scripts\GravField.cs" />
      <Compile Include="Assets\Scripts\GravObject.cs" />

@@ -8,6 +8,12 @@ public class EnemyMovement : MonoBehaviour {
 	int collisonPushback = 10;
 	int hp = 3;
 
+	bool followPLayer;
+	Transform playerTransform;
+	float moveSpeed = 0.01f;
+
+	Vector3 playerPosition = Vector3.zero;
+
 	// Use this for initialization
 	void Awake () {
 		//print("awake");
@@ -23,16 +29,36 @@ public class EnemyMovement : MonoBehaviour {
 		physicsObject.UpdateVelocity();
 		physicsObject.UpdateRotation("standard");
 		
+		if(followPLayer){
+			moveToPlayer(playerTransform);
+		}
 		
 	}
 	Vector2 vectorFromPosition(Transform fromTransform){
 		return new Vector2(transform.position.x - fromTransform.position.x, transform.position.y - fromTransform.position.y);
 	}
 
+	void moveToPlayer(Transform playerPosition){
+		vectorFromPosition(playerPosition);
+		physicsObject.addVelocityVector(vectorFromPosition(playerPosition) * - 1 * moveSpeed);
+	}
+
+
 	void OnTriggerEnter2D(Collider2D collider2D){
-		if (collider2D.name != "GravField"){
+		if (collider2D.name != "GravField" && collider2D.name != "EnemyTrigger"){
 	
 			collidedWithProjectileNew(collider2D);
+		}
+		if (collider2D.name == "EnemyTrigger"){
+			followPLayer = true;
+			playerTransform = collider2D.transform;
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D collider2D){
+		if (collider2D.name == "EnemyTrigger"){
+			followPLayer = false;
+			
 		}
 	}
 	void collidedWithProjectileNew(Collider2D collider2D){
@@ -47,13 +73,8 @@ public class EnemyMovement : MonoBehaviour {
 	}
 
 	void Jump(){
-		//print("physics obejct "+ physicsObject.FrictionMultiplier);
 		physicsObject.addVelocityUp(300);
-		physicsObject.addVelocityRight(50);
-		//print("jump");
-		//physicsObject.addVelocityUp(800);
-		//physicsObject.addVelocityLeft(10);
-		
+
 	}
 
 	
