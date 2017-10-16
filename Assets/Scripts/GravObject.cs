@@ -20,7 +20,7 @@ public class GravObject : MonoBehaviour {
 
 	//When a obejct enters a gravField, set the gravField
 	void OnTriggerEnter2D(Collider2D field){
-		//print("Collided with gravField");
+		print("Collided with " + field.name);
 		physicsObject.SetTargetPlanet(field.GetComponent<GravField>());
 	}
 	void OnTriggerExit2D(Collider2D field){

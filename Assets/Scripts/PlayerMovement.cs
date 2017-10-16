@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour {
 	float jumpVelocity = 600f;	
 	PhysicsObject physicsObject;
 	public GameObject ProjectilePrefab;
+
+
 	SpriteRenderer spriteRenderer;
 	float collisionPushback = 15;
 	ProjectileMovement projectileMovement;
@@ -111,7 +113,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D collider2D){
 		//print("player collided with: " + collider2D.name);
-		if (collider2D.name != "GravField" && collider2D.name != "EnemyTrigger"){
+		if (collider2D.name != "GravField" && collider2D.name != "EnemyTrigger" && collider2D.name != "Trampoline(Clone)"){
 			PlayerCollisionEvent.Invoke();
 			collidedWithHostile(collider2D);
 		}

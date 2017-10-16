@@ -6,9 +6,9 @@ using UnityEngine.Events;
 public class PhysicsObject : MonoBehaviour {
 	public LayerMask RayMask;
 
-	Vector2 vectorToPlanet; 
-	float planetDistane { get {return vectorToPlanet.magnitude;}}
-	public Vector2 PlanetDirection { get {return vectorToPlanet.normalized;}}
+	public Vector2 VectorToPlanet; 
+	float planetDistane { get {return VectorToPlanet.magnitude;}}
+	public Vector2 PlanetDirection { get {return VectorToPlanet.normalized;}}
 	public Vector2 PlanetTangentLeft { 
 		get {
 				Vector2 dir = PlanetDirection;
@@ -23,7 +23,7 @@ public class PhysicsObject : MonoBehaviour {
 	float gravity;
 	float planetFriction;
 	float atmosphereFriction;
-	float planetRadius;
+	public float planetRadius;
 	public bool IsGrounded { get; private set; }
 	public Transform TargetPlanet;
 
@@ -48,7 +48,7 @@ public class PhysicsObject : MonoBehaviour {
 		if(InGravField){
 			//print("Velocity= " + velocity);
 			//print(" ");
-			vectorToPlanet = TargetPlanet.position - transform.position;
+			VectorToPlanet = TargetPlanet.position - transform.position;
 			Velocity += PlanetDirection * gravity * Time.deltaTime;
 			
 			//Debug.DrawRay(transform.position, velocity, Color.yellow, 2f);
