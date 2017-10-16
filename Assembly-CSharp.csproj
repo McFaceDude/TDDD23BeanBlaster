@@ -59,10 +59,10 @@
      <Compile Include="Assets\Scripts\CollisionObject.cs" />
      <Compile Include="Assets\Scripts\DetectionField.cs" />
      <Compile Include="Assets\Scripts\EnemyMovement.cs" />
+     <Compile Include="Assets\Scripts\EnemyTrigger.cs" />
      <Compile Include="Assets\Scripts\GravField.cs" />
      <Compile Include="Assets\Scripts\GravObject.cs" />
      <Compile Include="Assets\Scripts\PhysicsObject.cs" />
-     <Compile Include="Assets\Scripts\PlanetBigPhysics.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\ProjectileMovement.cs" />
  <Reference Include="UnityEngine.CoreModule">

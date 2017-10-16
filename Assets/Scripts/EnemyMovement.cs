@@ -6,21 +6,23 @@ public class EnemyMovement : MonoBehaviour {
 	CollisionObject collisionObject;
 	PhysicsObject physicsObject;
 	int collisonPushback = 10;
-	int hp = 3;
+	int hp = 1;
 
-	bool followPLayer;
+	public bool followPLayer = false;
 	Transform playerTransform;
-	float moveSpeed = 0.01f;
+	public float moveSpeed = 0.01f;
+
+	public float jumpSpeed = 300;
 
 	Vector3 playerPosition = Vector3.zero;
 
 	// Use this for initialization
 	void Awake () {
 		//print("awake");
-		collisionObject = GetComponentInChildren<CollisionObject>();
+		//collisionObject = GetComponentInChildren<CollisionObject>();
 		physicsObject = GetComponent<PhysicsObject>();
 		physicsObject.HitEvenet.AddListener(Jump);
-		GravObject gravObject = GetComponentInChildren<GravObject>();
+		//GravObject gravObject = GetComponentInChildren<GravObject>();
 	
 	}
 	
@@ -45,35 +47,33 @@ public class EnemyMovement : MonoBehaviour {
 
 
 	void OnTriggerEnter2D(Collider2D collider2D){
-		if (collider2D.name != "GravField" && collider2D.name != "EnemyTrigger"){
-	
-			collidedWithProjectileNew(collider2D);
+		print(collider2D.name + " entered enemy field");
+		if (collider2D.transform.GetComponentsInParent<ProjectileMovement>().Length > 0){
+			collidedWithProjectile(collider2D);
 		}
-		if (collider2D.name == "EnemyTrigger"){
+		//print("on trigger "  + collider2D.transform.GetComponentInParent<PlayerMovement>().name);
+		if (collider2D.transform.GetComponentsInParent<PlayerMovement>().Length > 0){
 			followPLayer = true;
 			playerTransform = collider2D.transform;
 		}
 	}
 
-	void OnTriggerExit2D(Collider2D collider2D){
-		if (collider2D.name == "EnemyTrigger"){
-			followPLayer = false;
-			
-		}
-	}
-	void collidedWithProjectileNew(Collider2D collider2D){
+	
+	void collidedWithProjectile(Collider2D collider2D){
 		if (collider2D.name != "Player"){
 			hp -= 1;
 			physicsObject.addVelocityVector(vectorFromPosition(collider2D.transform) * collisonPushback);
+			
 		}
-		//print("enmy hit");
 		if (hp == 0){
+			physicsObject.TargetPlanet.GetComponentInChildren<GravField>().EnemyDied();
+			
 			Destroy(gameObject);
 		}
 	}
 
 	void Jump(){
-		physicsObject.addVelocityUp(300);
+		physicsObject.addVelocityUp(jumpSpeed);
 
 	}
 

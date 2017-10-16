@@ -9,7 +9,7 @@ public class ProjectileMovement : MonoBehaviour {
 	CollisionObject collisionObject;
 	//GameObject collisionObject2;
 	float projectileForce = 12;
-	float projectileAngle = 20;
+	float projectileAngle = 40;
 
 	Transform playerTransform;
 	Vector2 direction;
@@ -45,7 +45,7 @@ public class ProjectileMovement : MonoBehaviour {
 		//TODO add velocity of player to initial velocity of projectile
 
 
-		physicsObject.addVelocityVector(direction * (projectileForce + playerSpeed * 0.5f));
+		physicsObject.addVelocityVector(direction * ((projectileForce + playerSpeed) * 0.6f));
 		
 		//physicsObject.addVelocityVector(direction * projectileForce);
 	}
