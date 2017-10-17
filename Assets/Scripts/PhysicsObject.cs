@@ -27,9 +27,6 @@ public class PhysicsObject : MonoBehaviour {
 	public bool IsGrounded { get; private set; }
 	public Transform TargetPlanet;
 	GameObject camera;
-
-	//public UnityEvent HitEvenet;
-
 	public float FrictionMultiplier = 1;
 
 	public bool InGravField { get {return TargetPlanet != null; }}
@@ -42,8 +39,6 @@ public class PhysicsObject : MonoBehaviour {
 		float objectScale = transform.localScale.x;
 		objectRadius = objectScale * objectColliderRadius;
 		camera = GameObject.FindGameObjectWithTag("MainCamera");
-		
-		
 	}
 	
 	// UpdatePhysics is called by PlayerMovement after all the player input is done at the end of every FixedUpdate 
@@ -70,8 +65,6 @@ public class PhysicsObject : MonoBehaviour {
 			
 			if(hit){
 				if(TargetPlanet.GetComponentInChildren<GravField>().PlanetBeanified == false && gameObject.name == "Player"){
-					print("planet not beanified on " + gameObject);
-					print("");
 					camera.transform.GetComponent<CameraMovementOnPlayer>().PlayerView = true;
 				}
 				Velocity = xVector * (1 - planetFriction * FrictionMultiplier) + (hit.distance - objectRadius) * PlanetDirection;
@@ -81,9 +74,7 @@ public class PhysicsObject : MonoBehaviour {
 				Velocity = xVector * (1 - atmosphereFriction * FrictionMultiplier)  + yVector;
 			}
 		}	
-		//Debug.DrawRay(transform.position, vectorToPlanet, Color.yellow, 2f);
 		body.velocity = Velocity;
-		//print("body.velocity = " + body.velocity);
 	}
 
 	public void UpdateRotation(string type){
@@ -104,15 +95,11 @@ public class PhysicsObject : MonoBehaviour {
 		UpdateVelocity();
 	}
 	public void addVelocityRight(float velocity){
-		//print("PlanetTangentRight = " + PlanetTangentRight);
 		this.Velocity += velocity * PlanetTangentRight * Time.deltaTime;
 		UpdateVelocity();
 	}
 	public void addVelocityUp(float velocity){
-		
-		//print("Velocity up" + velocity * -PlanetDirection * Time.deltaTime);
 		this.Velocity += velocity * -PlanetDirection * Time.deltaTime;
-		//print("velocity after " + this.velocity);
 		UpdateVelocity();
 	}
 

@@ -22,14 +22,10 @@ public class GravField : MonoBehaviour {
 	
 	}
 	void OnTriggerEnter2D(Collider2D collider2D){
-		//print("Collided with " + collider2D.name + " parent: " + collider2D.transform.GetComponentsInParent<EnemyMovement>());
 		if(collider2D.transform.GetComponentInParent<EnemyMovement>() != null ){
-			//print("enemy entered! amoun in = " + amountOfenemies);
 			amountOfenemies += 1;
 		}
-		print("Grav field collided with: " + collider2D.name);
 		if(collider2D.transform.GetComponentInParent<PlayerMovement>() != null ){
-			//print("enemy entered! amoun in = " + amountOfenemies);
 			playerMovement =  collider2D.transform.GetComponentInParent<PlayerMovement>();
 		}
 	}
@@ -66,13 +62,9 @@ public class GravField : MonoBehaviour {
 	}
 
 	void planetBeanify(){
-		//Change sprite to beanified sprite
 		GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
 		camera.transform.GetComponent<CameraMovementOnPlayer>().ZoomOutForBeanification(transform.position);
 		transform.GetComponentInParent<SpriteRenderer>().sprite = BeanifiedPLanet;
 		beanify = true;
-		
-		
 	}
-
 }

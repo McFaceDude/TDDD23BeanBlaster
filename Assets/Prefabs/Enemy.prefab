@@ -273,7 +273,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1439482339364818}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.74, y: -6.08, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0.3, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children:
   - {fileID: 4806796861081708}
@@ -586,7 +586,9 @@ MonoBehaviour:
   RayMask:
     serializedVersion: 2
     m_Bits: 256
+  VectorToPlanet: {x: 0, y: 0}
   Velocity: {x: 0, y: 0}
+  planetRadius: 0
   TargetPlanet: {fileID: 0}
   FrictionMultiplier: 1
   HitEvenet:
@@ -632,7 +634,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef559c69728c74c0e902542e5536bf69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.01
+  hp: 2
+  followPLayer: 0
+  moveSpeed: 0.02
   jumpSpeed: 300
 --- !u!212 &212414054211070522
 SpriteRenderer:

@@ -19,9 +19,7 @@ public class CollisionObject : MonoBehaviour {
 
 	//When a obejct enters a gravField, set the gravField
 	void OnTriggerEnter2D(Collider2D collider2D){
-		print("Collided with " + collider2D.name);
 		if (collider2D.name != "GravField"){
-			//print("collided with something");
 			CollisionEvent.Invoke();
 		}
 		

@@ -29,13 +29,11 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 	void FixedUpdate () {
 		planetTf =  player.GetComponent<PhysicsObject>().TargetPlanet;
 		if (PlayerView){
-			print("playerView in camera");
 			transform.position =  new Vector3(player.transform.position.x, player.transform.position.y, -10);
 			camera.orthographicSize = 6;
 			transform.rotation = player.transform.rotation;
 		}
 		else if(ZoomedOutPlayerView){
-			print("zoomedOut in camera");
 			camera.transform.position =  new Vector3(player.transform.position.x, player.transform.position.y, -10);
 			transform.rotation = player.transform.rotation;
 			camera.orthographicSize = 32;
@@ -46,7 +44,6 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 
 	public void FollowPlayerZoomedOut(Vector3 playerPosition){
 		this.playerPosition = new Vector3(playerPosition.x, playerPosition.y, -10);
-		print("follow the player");
 		PlayerView = false;
 		ZoomedOutPlayerView = true;
 	}
@@ -54,8 +51,6 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 	public void ZoomOutForBeanification(Vector3 planetPosition){
 		PlayerView = false;
 		ZoomedOutPlayerView = false;
-		print("field of view " + camera.orthographicSize);
-		//camera.fieldOfView = 20;
 		camera.transform.position = new Vector3(planetPosition.x, planetPosition.y, -10);
 		camera.orthographicSize = 32;
 		transform.rotation = player.transform.rotation;

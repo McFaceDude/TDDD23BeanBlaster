@@ -6,7 +6,7 @@ public class EnemyMovement : MonoBehaviour {
 	CollisionObject collisionObject;
 	PhysicsObject physicsObject;
 	int collisonPushback = 10;
-	int hp = 1;
+	public int hp = 2;
 
 	public bool followPLayer = false;
 	Transform playerTransform;
@@ -18,12 +18,8 @@ public class EnemyMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		//print("awake");
-		//collisionObject = GetComponentInChildren<CollisionObject>();
 		physicsObject = GetComponent<PhysicsObject>();
 		physicsObject.HitEvenet.AddListener(Jump);
-		//GravObject gravObject = GetComponentInChildren<GravObject>();
-	
 	}
 	
 	// Update is called once per frame
@@ -47,18 +43,15 @@ public class EnemyMovement : MonoBehaviour {
 
 
 	void OnTriggerEnter2D(Collider2D collider2D){
-		print(collider2D.name + " entered enemy field");
 		if (collider2D.transform.GetComponentsInParent<ProjectileMovement>().Length > 0){
 			collidedWithProjectile(collider2D);
 		}
-		//print("on trigger "  + collider2D.transform.GetComponentInParent<PlayerMovement>().name);
 		if (collider2D.transform.GetComponentsInParent<PlayerMovement>().Length > 0){
 			followPLayer = true;
 			playerTransform = collider2D.transform;
 		}
 	}
 
-	
 	void collidedWithProjectile(Collider2D collider2D){
 		if (collider2D.name != "Player"){
 			hp -= 1;
@@ -74,8 +67,5 @@ public class EnemyMovement : MonoBehaviour {
 
 	void Jump(){
 		physicsObject.addVelocityUp(jumpSpeed);
-
 	}
-
-	
 }
