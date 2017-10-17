@@ -26,6 +26,7 @@ public class PhysicsObject : MonoBehaviour {
 	public float planetRadius;
 	public bool IsGrounded { get; private set; }
 	public Transform TargetPlanet;
+	GameObject camera;
 
 	//public UnityEvent HitEvenet;
 
@@ -40,6 +41,8 @@ public class PhysicsObject : MonoBehaviour {
 		float objectColliderRadius = transform.GetComponent<CircleCollider2D>().radius;
 		float objectScale = transform.localScale.x;
 		objectRadius = objectScale * objectColliderRadius;
+		camera = GameObject.FindGameObjectWithTag("MainCamera");
+		
 		
 	}
 	
@@ -66,6 +69,11 @@ public class PhysicsObject : MonoBehaviour {
 			IsGrounded = hit;
 			
 			if(hit){
+				if(TargetPlanet.GetComponentInChildren<GravField>().PlanetBeanified == false && gameObject.name == "Player"){
+					print("planet not beanified on " + gameObject);
+					print("");
+					camera.transform.GetComponent<CameraMovementOnPlayer>().PlayerView = true;
+				}
 				Velocity = xVector * (1 - planetFriction * FrictionMultiplier) + (hit.distance - objectRadius) * PlanetDirection;
 				HitEvenet.Invoke();
 			}

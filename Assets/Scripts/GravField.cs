@@ -11,10 +11,12 @@ public class GravField : MonoBehaviour {
 	public Sprite BeanifiedPLanet;
 
 	PlayerMovement playerMovement;
-
 	public GameObject TrampolinePrefab;
 	List<EnemyMovement> enemiesInField = new List<EnemyMovement>();
 	float amountOfenemies = 0;
+	float timer = 2;
+	bool beanify = false;
+	public bool PlanetBeanified = false;
 
 	void Awake(){
 	
@@ -35,7 +37,9 @@ public class GravField : MonoBehaviour {
 	public void EnemyDied(){
 		amountOfenemies -= 1;
 		if(amountOfenemies == 0){
-			planetBeanified();
+			PlanetBeanified = true;
+			timer = 4;
+			planetBeanify();
 		}
 	}
 
@@ -47,25 +51,28 @@ public class GravField : MonoBehaviour {
 	}
 
 	IEnumerator wait(float waitTime){
-
-		
 		 yield return new WaitForSecondsRealtime(waitTime);
-		 
-         
 	}
 
-	void planetBeanified(){
+	void FixedUpdate(){
+		
+		if(beanify){
+			timer -= Time.deltaTime;
+			if (timer < 0 ){
+				Instantiate(TrampolinePrefab,  new Vector3(7, -0.7f, -1) * 1.1f, new Quaternion(0f,0f,0f,1f)).GetComponent<Trampoline>().gravfieldTf = transform;
+				beanify = false;
+			}
+		}
+	}
+
+	void planetBeanify(){
+		//Change sprite to beanified sprite
 		GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
 		camera.transform.GetComponent<CameraMovementOnPlayer>().ZoomOutForBeanification(transform.position);
-		print("time before = " + Time.time);
-		wait(200.0f);
-		print("time after= " + Time.time);
-		
-		
 		transform.GetComponentInParent<SpriteRenderer>().sprite = BeanifiedPLanet;
-		//trampolineStartingPos();
-		print("POSITION = " + transform.rotation);
-		Instantiate(TrampolinePrefab,  new Vector3(7, -0.7f, -1) * 1.1f, new Quaternion(0f,0f,0f,1f)).GetComponent<Trampoline>().gravfieldTf = transform;
+		beanify = true;
+		
+		
 	}
 
 }

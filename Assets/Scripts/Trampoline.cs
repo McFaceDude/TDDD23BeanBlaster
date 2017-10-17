@@ -22,7 +22,9 @@ public class Trampoline : MonoBehaviour {
 		print("Collided with " + collider2D.name);
 		Vector3 trampolineVector =  -1 *(gravfieldTf.position - transform.position);
 		Debug.DrawRay(transform.position, -trampolineVector, Color.yellow, 4f);
-		collider2D.GetComponentInParent<PhysicsObject>().addVelocityVector(trampolineVector* 1.8f);
+		collider2D.GetComponentInParent<PhysicsObject>().addVelocityVector(trampolineVector* 2.2f);
+		GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+		camera.transform.GetComponent<CameraMovementOnPlayer>().FollowPlayerZoomedOut(collider2D.transform.position);
 		
 	}
 }
