@@ -63,6 +63,7 @@ public class PhysicsObject : MonoBehaviour {
 			RaycastHit2D hit = Physics2D.Raycast(transform.position, PlanetDirection, raycastDistance, RayMask);
 			IsGrounded = hit;
 			
+			
 			if(hit){
 				if(TargetPlanet.GetComponentInChildren<GravField>().PlanetBeanified == false && gameObject.name == "Player"){
 					camera.transform.GetComponent<CameraMovementOnPlayer>().PlayerView = true;

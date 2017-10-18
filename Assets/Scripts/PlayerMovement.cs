@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour {
 	float jumpVelocity = 600f;	
 	PhysicsObject physicsObject;
 	public GameObject ProjectilePrefab;
+	float hp = 3;
 
 
 	SpriteRenderer spriteRenderer;
@@ -81,7 +82,6 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		if(didShoot){
 			didShoot = false;
-			print("player velocity-magniture = "+ physicsObject.Velocity.magnitude);
 			Instantiate(ProjectilePrefab, transform.position + projectileStartingPos() , Quaternion.identity).GetComponent<ProjectileMovement>().SetDirection(transform, facingRight);
 		}
 		
@@ -106,17 +106,21 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	void collidedWithHostile(Collider2D collider2D){
-
+		hp -= 1;
+		if(hp == 0){
+			print("DEAAAD!");
+			
+		}
 		Vector2 collisionVector = vectorFromPosition(collider2D.transform);
 		physicsObject.addVelocityVector(collisionVector * collisionPushback);
 	}
 
 	void OnTriggerEnter2D(Collider2D collider2D){
-		//print("player collided with: " + collider2D.name);
-		if (collider2D.name != "GravField" && collider2D.name != "EnemyTrigger" && collider2D.name != "Trampoline(Clone)"){
-			PlayerCollisionEvent.Invoke();
-			collidedWithHostile(collider2D);
+		if (collider2D.name == "CollisionObject"){
+			if(collider2D.transform.GetComponentsInParent<EnemyMovement>().Length > 0){
+				collidedWithHostile(collider2D);
+				
+			}
 		}
-		
 	}
 }
