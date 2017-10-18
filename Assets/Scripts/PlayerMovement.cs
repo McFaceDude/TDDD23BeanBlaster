@@ -109,6 +109,7 @@ public class PlayerMovement : MonoBehaviour {
 		hp -= 1;
 		if(hp == 0){
 			print("DEAAAD!");
+			Destroy(gameObject);
 			
 		}
 		Vector2 collisionVector = vectorFromPosition(collider2D.transform);
