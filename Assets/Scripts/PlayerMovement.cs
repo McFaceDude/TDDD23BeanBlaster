@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 //Handles the input by the user
 public class PlayerMovement : MonoBehaviour {
-
+	
+	bool coolDown = false;
 	public bool didJump = false;
 	public bool leftPressed = false;
 	public bool rightPressed = false;
@@ -16,9 +17,10 @@ public class PlayerMovement : MonoBehaviour {
 	PhysicsObject physicsObject;
 	public GameObject ProjectilePrefab;
 	float hp = 3;
+	float coolDownTimer = 1.5f;
 
 	SpriteRenderer spriteRenderer;
-	float collisionPushback = 20;
+	float collisionPushback = 25;
 	ProjectileMovement projectileMovement;
 	float projectileRadius;
 	float playerRadius;
@@ -80,8 +82,17 @@ public class PlayerMovement : MonoBehaviour {
 				physicsObject.addVelocityRight(airMoveVelocity);
 			}
 		}
-		if(didShoot){
+		if(coolDown){
+			coolDownTimer -= Time.deltaTime;
 			didShoot = false;
+			if (coolDownTimer < 0 ){
+				coolDown = false;
+				coolDownTimer = 1.5f;
+			}
+		}
+		if(didShoot && coolDown == false){
+			didShoot = false;
+			coolDown = true;
 			Instantiate(ProjectilePrefab, transform.position + projectileStartingPos() , Quaternion.identity).GetComponent<ProjectileMovement>().SetDirection(transform, facingRight);
 		}
 		
@@ -108,14 +119,22 @@ public class PlayerMovement : MonoBehaviour {
 	void collidedWithHostile(Collider2D collider2D){
 		GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
 		hp -= 1;
+		
+	
+		if (GameObject.FindGameObjectWithTag("Heart_3") != null){
+			Destroy(GameObject.FindGameObjectWithTag("Heart_3"));
+		}
+		else if(GameObject.FindGameObjectWithTag("Heart_2") != null){
+			Destroy(GameObject.FindGameObjectWithTag("Heart_2"));
+		}
+		else if(GameObject.FindGameObjectWithTag("Heart_1") != null){
+			Destroy(GameObject.FindGameObjectWithTag("Heart_1"));
+		}
+
 		if(hp == 0){
 			camera = GameObject.FindGameObjectWithTag("MainCamera");
 			camera.transform.GetComponent<CameraMovementOnPlayer>().GameOver = true;
 			Destroy(gameObject);
-		}
-	
-		if (GameObject.FindGameObjectWithTag("Heart") != null){
-			Destroy(GameObject.FindGameObjectWithTag("Heart"));
 		}
 		camera.transform.GetComponent<CameraMovementOnPlayer>().Shake();
 		
@@ -123,8 +142,6 @@ public class PlayerMovement : MonoBehaviour {
 		physicsObject.addVelocityVector(collisionVector * collisionPushback);
 	}
 	
-	
-
 	void OnTriggerEnter2D(Collider2D collider2D){
 		if (collider2D.name == "CollisionObject"){
 			if(collider2D.transform.GetComponentsInParent<EnemyMovement>().Length > 0){

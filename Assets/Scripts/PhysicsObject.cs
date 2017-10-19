@@ -28,6 +28,7 @@ public class PhysicsObject : MonoBehaviour {
 	public Transform TargetPlanet;
 	GameObject camera;
 	public float FrictionMultiplier = 1;
+	public Vector2 xVector;
 
 	public bool InGravField { get {return TargetPlanet != null; }}
 	Rigidbody2D body; 
@@ -51,7 +52,7 @@ public class PhysicsObject : MonoBehaviour {
 			
 			//Debug.DrawRay(transform.position, velocity, Color.yellow, 2f);
 
-			Vector2 xVector = Vector2.Dot(Velocity, PlanetTangentRight)*PlanetTangentRight; 
+			xVector = Vector2.Dot(Velocity, PlanetTangentRight)*PlanetTangentRight; 
 			Vector2 yVector = Velocity - xVector; 
 
 			float raycastDistance = 0f;

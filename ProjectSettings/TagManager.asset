@@ -8,6 +8,9 @@ TagManager:
   - Projectile
   - Heart
   - EndCredits
+  - Heart_1
+  - Heart_2
+  - Heart_3
   layers:
   - Default
   - TransparentFX

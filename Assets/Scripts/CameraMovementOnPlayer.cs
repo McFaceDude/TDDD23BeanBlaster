@@ -39,24 +39,13 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 	}
 	
 	void Update(){
-		if(shake_intensity > 0){
-			transform.position = originPosition + Random.insideUnitSphere * shake_intensity;
-			transform.rotation = new  Quaternion(
-							originRotation.x + Random.Range(-shake_intensity,shake_intensity)* 0.2f,
-							originRotation.y + Random.Range(-shake_intensity,shake_intensity)* 0.2f,
-							originRotation.z + Random.Range(-shake_intensity,shake_intensity)* 0.2f,
-							originRotation.w + Random.Range(-shake_intensity,shake_intensity)* 0.2f);
-			shake_intensity -= shake_decay;
-		}
+		
 	}
 
 	// Update is called once per frame
 	void FixedUpdate () {
 		
-		if(GameOver && reload){
-			LoadRealoadButton();
-			reload = false;
-		}
+		
 
 		if (player != null){
 			planetTf =  player.GetComponent<PhysicsObject>().TargetPlanet;
@@ -72,13 +61,22 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 			}
 			transform.rotation = player.transform.rotation;
 		}
+		if(shake_intensity > 0){
+			transform.position = originPosition + Random.insideUnitSphere * shake_intensity;
+			transform.rotation = new  Quaternion(
+							originRotation.x + Random.Range(-shake_intensity,shake_intensity)* 0.2f,
+							originRotation.y + Random.Range(-shake_intensity,shake_intensity)* 0.2f,
+							originRotation.z + Random.Range(-shake_intensity,shake_intensity)* 0.2f,
+							originRotation.w + Random.Range(-shake_intensity,shake_intensity)* 0.2f);
+			shake_intensity -= shake_decay;
+		}
 	}
 
 	public void Shake(){
 		originPosition = transform.position;
 		originRotation = transform.rotation;
 		shake_intensity = 0.2f;
-		shake_decay = 0.09f;
+		shake_decay = 0.05f;
 	}
 
 	public void FollowPlayerZoomedOut(Vector3 playerPosition){

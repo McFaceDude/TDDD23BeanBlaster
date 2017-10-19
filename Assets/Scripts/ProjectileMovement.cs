@@ -8,8 +8,8 @@ public class ProjectileMovement : MonoBehaviour {
 	
 	CollisionObject collisionObject;
 	//GameObject collisionObject2;
-	float projectileForce = 11;
-	float projectileAngle = 40;
+	float projectileForce = 7;
+	float projectileAngle = 70;
 
 	Transform playerTransform;
 	Vector2 direction;
@@ -33,15 +33,15 @@ public class ProjectileMovement : MonoBehaviour {
 
 	public void SetDirection(Transform playerTransform, bool facingRight){
 		this.playerTransform = playerTransform;
-		float playerSpeed = this.playerTransform.GetComponent<PhysicsObject>().Velocity.magnitude;
+		Vector2 playerXVector = this.playerTransform.GetComponent<PhysicsObject>().xVector;
 		if(facingRight){
 			direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * (playerTransform.rotation.eulerAngles.z + projectileAngle)), Mathf.Sin(Mathf.Deg2Rad * (playerTransform.rotation.eulerAngles.z + projectileAngle)));
 		}
 		else {
 			direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * (playerTransform.rotation.eulerAngles.z + 180 - projectileAngle)), Mathf.Sin(Mathf.Deg2Rad * (playerTransform.rotation.eulerAngles.z + 180 - projectileAngle)));
 		}
-
-		physicsObject.addVelocityVector(direction * ((projectileForce + (playerSpeed/2)) * 0.6f));
+		print(playerXVector.magnitude);
+		physicsObject.addVelocityVector(direction * ((projectileForce + playerXVector.magnitude)));
 	}
 
 	void OnTriggerEnter2D(Collider2D field){
