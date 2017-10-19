@@ -333,7 +333,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0.057189543, b: 0.14705884, a: 0}
+  m_BackGroundColor: {r: 0, g: 0.05882353, b: 0.14509805, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -385,6 +385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerView: 0
   ZoomedOutPlayerView: 1
+  gameOver: 0
 --- !u!1 &248237404
 GameObject:
   m_ObjectHideFlags: 0

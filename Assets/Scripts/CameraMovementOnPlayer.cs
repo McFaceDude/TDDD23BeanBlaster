@@ -21,6 +21,12 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 
 	private GUIStyle guiStyle = new GUIStyle();
 
+	//for shaking
+	Vector3 originPosition;
+	Quaternion originRotation;
+	float shake_decay;
+	float shake_intensity;
+
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");
@@ -28,6 +34,18 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 		camera = transform.GetComponent<Camera>();
 	}
 	
+	void Update(){
+		if(shake_intensity > 0){
+			transform.position = originPosition + Random.insideUnitSphere * shake_intensity;
+			transform.rotation = new  Quaternion(
+							originRotation.x + Random.Range(-shake_intensity,shake_intensity)* 0.2f,
+							originRotation.y + Random.Range(-shake_intensity,shake_intensity)* 0.2f,
+							originRotation.z + Random.Range(-shake_intensity,shake_intensity)* 0.2f,
+							originRotation.w + Random.Range(-shake_intensity,shake_intensity)* 0.2f);
+			shake_intensity -= shake_decay;
+		}
+	}
+
 	// Update is called once per frame
 	void FixedUpdate () {
 		
@@ -43,10 +61,15 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 				transform.rotation = player.transform.rotation;
 				camera.orthographicSize = 32;
 			}
-		
 			transform.rotation = player.transform.rotation;
 		}
-		
+	}
+
+	public void Shake(){
+		originPosition = transform.position;
+		originRotation = transform.rotation;
+		shake_intensity = 0.2f;
+		shake_decay = 0.09f;
 	}
 
 	public void FollowPlayerZoomedOut(Vector3 playerPosition){
@@ -70,4 +93,11 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 		camera.orthographicSize = 32;
 		transform.rotation = player.transform.rotation;
 	}
+	 
+	
+	
+	
+	
+	
+	
 }

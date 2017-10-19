@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour {
 	CollisionObject collisionObject;
 	PhysicsObject physicsObject;
-	int collisonPushback = 10;
+	int collisonPushback = 20;
 	public int hp = 2;
 
 	public bool followPLayer = false;

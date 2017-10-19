@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour {
 	float hp = 3;
 
 	SpriteRenderer spriteRenderer;
-	float collisionPushback = 15;
+	float collisionPushback = 20;
 	ProjectileMovement projectileMovement;
 	float projectileRadius;
 	float playerRadius;
@@ -106,10 +106,10 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	void collidedWithHostile(Collider2D collider2D){
+		GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
 		hp -= 1;
 		if(hp == 0){
-			print("DEAAAD!");
-			GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+			camera = GameObject.FindGameObjectWithTag("MainCamera");
 			camera.transform.GetComponent<CameraMovementOnPlayer>().gameOver = true;
 			Destroy(gameObject);
 		}
@@ -117,6 +117,7 @@ public class PlayerMovement : MonoBehaviour {
 		if (GameObject.FindGameObjectWithTag("Heart") != null){
 			Destroy(GameObject.FindGameObjectWithTag("Heart"));
 		}
+		camera.transform.GetComponent<CameraMovementOnPlayer>().Shake();
 		
 		Vector2 collisionVector = vectorFromPosition(collider2D.transform);
 		physicsObject.addVelocityVector(collisionVector * collisionPushback);

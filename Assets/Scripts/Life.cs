@@ -13,7 +13,6 @@ public class Life : MonoBehaviour {
 		
 		camera = GameObject.FindGameObjectWithTag("MainCamera");
 		cameraPosition = camera.transform.position;
-		print(gameObject.name);
 		if(gameObject.name == "Heart_1"){
 			pos_offset = offset;
 		}
