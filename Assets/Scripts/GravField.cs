@@ -66,5 +66,9 @@ public class GravField : MonoBehaviour {
 		camera.transform.GetComponent<CameraMovementOnPlayer>().ZoomOutForBeanification(transform.position);
 		transform.GetComponentInParent<SpriteRenderer>().sprite = BeanifiedPLanet;
 		beanify = true;
+		if (transform.parent.transform.gameObject.name == "Planet_2"){
+			camera.transform.GetComponent<CameraMovementOnPlayer>().GameWon = true;
+		}
+
 	}
 }

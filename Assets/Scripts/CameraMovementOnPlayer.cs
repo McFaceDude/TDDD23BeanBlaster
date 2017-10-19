@@ -18,7 +18,8 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 	float zoomSpeed = 30; 
 	Camera camera;
 	Vector3 playerPosition;
-	public bool gameOver = false;
+	public bool GameOver = false;
+	public bool GameWon = false;
 
 	private GUIStyle guiStyle = new GUIStyle();
 
@@ -51,7 +52,8 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		if(gameOver && reload){
+		
+		if(GameOver && reload){
 			LoadRealoadButton();
 			reload = false;
 		}
@@ -85,12 +87,22 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 		ZoomedOutPlayerView = true;
 	}
 	void OnGUI(){
-		if (gameOver){
+		guiStyle.alignment = TextAnchor.UpperCenter;
+		if (GameOver){
+			guiStyle.alignment = TextAnchor.UpperCenter;
 			guiStyle.fontSize = 80;
 			guiStyle.normal.textColor = Color.white;
-			GUI.Label(new Rect(55,100,Screen.width,Screen.height),"GAME OVER!" , guiStyle);
+			GUI.Label(new Rect(transform.position.x ,100,Screen.width,Screen.height),"GAME OVER!" , guiStyle);
 			guiStyle.fontSize = 30;
-			GUI.Label(new Rect(55,200,Screen.width,Screen.height),"Created by Samuel Lindgren samli627" , guiStyle);	
+			GUI.Label(new Rect(transform.position.x,200,Screen.width,Screen.height),"Created by Samuel Lindgren samli627" , guiStyle);	
+		}
+		if (GameWon){
+			guiStyle.fontSize = 80;
+			guiStyle.normal.textColor = Color.white;
+			GUI.Label(new Rect(transform.position.x,100,Screen.width,Screen.height),"GAME WON!" , guiStyle);
+			guiStyle.fontSize = 30;
+			GUI.Label(new Rect(transform.position.x, 200,Screen.width,Screen.height),"All the planets in the galaxy have been beanified!" , guiStyle);
+			GUI.Label(new Rect(transform.position.x, 250,Screen.width,Screen.height),"Created by Samuel Lindgren samli627" , guiStyle);
 		}
 	}
 

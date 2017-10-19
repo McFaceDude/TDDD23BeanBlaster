@@ -110,7 +110,7 @@ public class PlayerMovement : MonoBehaviour {
 		hp -= 1;
 		if(hp == 0){
 			camera = GameObject.FindGameObjectWithTag("MainCamera");
-			camera.transform.GetComponent<CameraMovementOnPlayer>().gameOver = true;
+			camera.transform.GetComponent<CameraMovementOnPlayer>().GameOver = true;
 			Destroy(gameObject);
 		}
 	
