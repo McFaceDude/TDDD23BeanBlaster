@@ -17,17 +17,17 @@ public class PlayerMovement : MonoBehaviour {
 	public GameObject ProjectilePrefab;
 	float hp = 3;
 
-
 	SpriteRenderer spriteRenderer;
 	float collisionPushback = 15;
 	ProjectileMovement projectileMovement;
 	float projectileRadius;
 	float playerRadius;
 	public UnityEvent PlayerCollisionEvent = new UnityEvent();
-
+	
 	bool facingRight{get {return spriteRenderer.flipX; }}
 	// Use this for initialization
 	void Start () {
+	
 		physicsObject = GetComponent<PhysicsObject>();
 		spriteRenderer = GetComponent<SpriteRenderer>(); 
 		projectileMovement = GameObject.FindGameObjectWithTag("Projectile").GetComponent<ProjectileMovement>();
@@ -109,6 +109,8 @@ public class PlayerMovement : MonoBehaviour {
 		hp -= 1;
 		if(hp == 0){
 			print("DEAAAD!");
+			GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+			camera.transform.GetComponent<CameraMovementOnPlayer>().gameOver = true;
 			Destroy(gameObject);
 		}
 	
@@ -119,6 +121,8 @@ public class PlayerMovement : MonoBehaviour {
 		Vector2 collisionVector = vectorFromPosition(collider2D.transform);
 		physicsObject.addVelocityVector(collisionVector * collisionPushback);
 	}
+	
+	
 
 	void OnTriggerEnter2D(Collider2D collider2D){
 		if (collider2D.name == "CollisionObject"){

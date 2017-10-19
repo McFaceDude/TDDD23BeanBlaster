@@ -28,7 +28,10 @@ public class EnemyMovement : MonoBehaviour {
 		physicsObject.UpdateRotation("standard");
 		
 		if(followPLayer){
-			moveToPlayer(playerTransform);
+			if (playerTransform != null){
+				moveToPlayer(playerTransform);
+			}
+			
 		}
 		
 	}
