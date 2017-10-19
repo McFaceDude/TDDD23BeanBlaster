@@ -110,8 +110,12 @@ public class PlayerMovement : MonoBehaviour {
 		if(hp == 0){
 			print("DEAAAD!");
 			Destroy(gameObject);
-			
 		}
+	
+		if (GameObject.FindGameObjectWithTag("Heart") != null){
+			Destroy(GameObject.FindGameObjectWithTag("Heart"));
+		}
+		
 		Vector2 collisionVector = vectorFromPosition(collider2D.transform);
 		physicsObject.addVelocityVector(collisionVector * collisionPushback);
 	}
