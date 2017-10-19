@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour {
 		if(Input.GetKey(KeyCode.RightArrow)){
 			rightPressed = true; 
 		}
-		if(Input.GetKeyDown(KeyCode.Space)){
+		if(Input.GetKeyDown(KeyCode.X)){
 			didShoot = true;
 		}
 	}
