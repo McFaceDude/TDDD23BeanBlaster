@@ -7,7 +7,7 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 	Transform planetTf;
 	GameObject player;
 	Vector2 planetDirection;
-	
+	public GameObject ReloadPrefab;
 
 	float colliderRadius;
 	float planetScale;
@@ -27,6 +27,7 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 	Quaternion originRotation;
 	float shake_decay;
 	float shake_intensity;
+	bool reload = true;
 
 	// Use this for initialization
 	void Start () {
@@ -50,7 +51,11 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		
+		if(gameOver && reload){
+			LoadRealoadButton();
+			reload = false;
+		}
+
 		if (player != null){
 			planetTf =  player.GetComponent<PhysicsObject>().TargetPlanet;
 			if (PlayerView){
@@ -83,11 +88,14 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 		if (gameOver){
 			guiStyle.fontSize = 80;
 			guiStyle.normal.textColor = Color.white;
-			GUI.Label(new Rect(40,100,Screen.width,Screen.height),"GAME OVER!" , guiStyle);
+			GUI.Label(new Rect(55,100,Screen.width,Screen.height),"GAME OVER!" , guiStyle);
 			guiStyle.fontSize = 30;
-			GUI.Label(new Rect(40,200,Screen.width,Screen.height),"Created by Samuel Lindgren samli627" , guiStyle);
+			GUI.Label(new Rect(55,200,Screen.width,Screen.height),"Created by Samuel Lindgren samli627" , guiStyle);	
 		}
-		
+	}
+
+	void LoadRealoadButton(){
+		//Instantiate(ReloadPrefab, new Vector3(transform.position.x, transform.position.y -4.5f, transform.position.z + 2) , Quaternion.identity);
 	}
 
 	public void ZoomOutForBeanification(Vector3 planetPosition){
@@ -96,6 +104,9 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 		camera.transform.position = new Vector3(planetPosition.x, planetPosition.y, -10);
 		camera.orthographicSize = 32;
 		transform.rotation = player.transform.rotation;
+	}
+	public void RestartGame(){
+
 	}
 	 
 	

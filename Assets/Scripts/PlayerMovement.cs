@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour {
 	
 		physicsObject = GetComponent<PhysicsObject>();
 		spriteRenderer = GetComponent<SpriteRenderer>(); 
-		projectileMovement = GameObject.FindGameObjectWithTag("Projectile").GetComponent<ProjectileMovement>();
+		projectileMovement = ProjectilePrefab.GetComponent<ProjectileMovement>();
 		projectileRadius = projectileMovement.transform.localScale.x * projectileMovement.transform.GetComponent<CircleCollider2D>().radius;
 		playerRadius = transform.localScale.x * transform.GetComponent<CircleCollider2D>().radius;
 	}
