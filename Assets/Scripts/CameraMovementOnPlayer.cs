@@ -7,6 +7,7 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 	Transform planetTf;
 	GameObject player;
 	Vector2 planetDirection;
+	
 
 	float colliderRadius;
 	float planetScale;
@@ -30,6 +31,7 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");
+		
 		planetTf =  player.GetComponent<PhysicsObject>().TargetPlanet;
 		camera = transform.GetComponent<Camera>();
 	}
@@ -81,7 +83,9 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 		if (gameOver){
 			guiStyle.fontSize = 80;
 			guiStyle.normal.textColor = Color.white;
-			GUI.Label(new Rect(20,Screen.height/4,Screen.width,Screen.height),"GAME OVER!", guiStyle);
+			GUI.Label(new Rect(40,100,Screen.width,Screen.height),"GAME OVER!" , guiStyle);
+			guiStyle.fontSize = 30;
+			GUI.Label(new Rect(40,200,Screen.width,Screen.height),"Created by Samuel Lindgren samli627" , guiStyle);
 		}
 		
 	}

@@ -8,7 +8,7 @@ public class ProjectileMovement : MonoBehaviour {
 	
 	CollisionObject collisionObject;
 	//GameObject collisionObject2;
-	float projectileForce = 12;
+	float projectileForce = 11;
 	float projectileAngle = 40;
 
 	Transform playerTransform;
@@ -41,7 +41,7 @@ public class ProjectileMovement : MonoBehaviour {
 			direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * (playerTransform.rotation.eulerAngles.z + 180 - projectileAngle)), Mathf.Sin(Mathf.Deg2Rad * (playerTransform.rotation.eulerAngles.z + 180 - projectileAngle)));
 		}
 
-		physicsObject.addVelocityVector(direction * ((projectileForce + playerSpeed) * 0.6f));
+		physicsObject.addVelocityVector(direction * ((projectileForce + (playerSpeed/2)) * 0.6f));
 	}
 
 	void OnTriggerEnter2D(Collider2D field){

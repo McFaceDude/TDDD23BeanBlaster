@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Icon : MonoBehaviour {
 
-	float timer = 13;
+	float timer = 11;
 
 	// Use this for initialization
 	void Start () {
