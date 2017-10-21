@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-//Handles the input by the user
+
 public class PlayerMovement : MonoBehaviour {
-	
+	//Handles the user input and the movements that are specific to the player like fiering.
+	//Also handles the behavior of the player when is collides with different game objects.
 	bool coolDown = false;
 	public bool didJump = false;
 	public bool leftPressed = false;
@@ -27,9 +28,8 @@ public class PlayerMovement : MonoBehaviour {
 	public UnityEvent PlayerCollisionEvent = new UnityEvent();
 	
 	bool facingRight{get {return spriteRenderer.flipX; }}
-	// Use this for initialization
-	void Start () {
-	
+
+	void Start () {	
 		physicsObject = GetComponent<PhysicsObject>();
 		spriteRenderer = GetComponent<SpriteRenderer>(); 
 		projectileMovement = ProjectilePrefab.GetComponent<ProjectileMovement>();
@@ -82,6 +82,7 @@ public class PlayerMovement : MonoBehaviour {
 				physicsObject.addVelocityRight(airMoveVelocity);
 			}
 		}
+		//Cooldown for when the player can fire.
 		if(coolDown){
 			coolDownTimer -= Time.deltaTime;
 			didShoot = false;
@@ -101,7 +102,7 @@ public class PlayerMovement : MonoBehaviour {
 	}	
 
 	Vector3 projectileStartingPos(){
-		
+		//Return the staring vector for the projectile realtive to the player postion.
 		if(facingRight){
 			Vector2 startingPos = physicsObject.PlanetTangentRight.normalized * (projectileRadius + playerRadius) * 1.00001f;
 			return new Vector3(startingPos.x, startingPos.y, 0);
@@ -132,12 +133,14 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 		if(hp == 0){
+			//Set the the gameOver boll in camera when the player dies.
 			camera = GameObject.FindGameObjectWithTag("MainCamera");
 			camera.transform.GetComponent<CameraMovementOnPlayer>().GameOver = true;
 			Destroy(gameObject);
 		}
+		//Camera shake when the player collides with enemies.
 		camera.transform.GetComponent<CameraMovementOnPlayer>().Shake();
-		
+		//Add a pushback to the player.
 		Vector2 collisionVector = vectorFromPosition(collider2D.transform);
 		physicsObject.addVelocityVector(collisionVector * collisionPushback);
 	}
@@ -146,7 +149,6 @@ public class PlayerMovement : MonoBehaviour {
 		if (collider2D.name == "CollisionObject"){
 			if(collider2D.transform.GetComponentsInParent<EnemyMovement>().Length > 0){
 				collidedWithHostile(collider2D);
-				
 			}
 		}
 	}

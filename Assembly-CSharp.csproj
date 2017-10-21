@@ -55,7 +55,6 @@
      <Compile Include="Assets\Graphics\Simple Vector Icons\Sample\IconPreview.cs" />
      <Compile Include="Assets\Scripts\CameraMovementOnPlayer.cs" />
      <Compile Include="Assets\Scripts\CollisionObject.cs" />
-     <Compile Include="Assets\Scripts\DetectionField.cs" />
      <Compile Include="Assets\Scripts\EnemyMovement.cs" />
      <Compile Include="Assets\Scripts\EnemyTrigger.cs" />
      <Compile Include="Assets\Scripts\GravField.cs" />

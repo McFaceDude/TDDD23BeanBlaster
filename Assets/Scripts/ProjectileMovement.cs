@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class ProjectileMovement : MonoBehaviour {
 
+	//Handles the pejectile movement and destoys the game object when it collides with something.
 	PhysicsObject physicsObject;
-	
 	CollisionObject collisionObject;
-	//GameObject collisionObject2;
 	float projectileForce = 7;
 	float projectileAngle = 70;
 

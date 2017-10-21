@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class PhysicsObject : MonoBehaviour {
+	//All the enemies, projectiles and the player has a physics object.
+	//It handles the collision with the planet and the movement and rotation of the object.
+	
 	public LayerMask RayMask;
-
 	public Vector2 VectorToPlanet; 
 	float planetDistane { get {return VectorToPlanet.magnitude;}}
 	public Vector2 PlanetDirection { get {return VectorToPlanet.normalized;}}

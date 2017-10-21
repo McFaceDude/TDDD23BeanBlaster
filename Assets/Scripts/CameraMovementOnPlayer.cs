@@ -37,16 +37,9 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 		planetTf =  player.GetComponent<PhysicsObject>().TargetPlanet;
 		camera = transform.GetComponent<Camera>();
 	}
-	
-	void Update(){
-		
-	}
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		
-		
-
 		if (player != null){
 			planetTf =  player.GetComponent<PhysicsObject>().TargetPlanet;
 			if (PlayerView){
@@ -104,10 +97,6 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 		}
 	}
 
-	void LoadRealoadButton(){
-		//Instantiate(ReloadPrefab, new Vector3(transform.position.x, transform.position.y -4.5f, transform.position.z + 2) , Quaternion.identity);
-	}
-
 	public void ZoomOutForBeanification(Vector3 planetPosition){
 		PlayerView = false;
 		ZoomedOutPlayerView = false;
@@ -115,14 +104,4 @@ public class CameraMovementOnPlayer : MonoBehaviour {
 		camera.orthographicSize = 32;
 		transform.rotation = player.transform.rotation;
 	}
-	public void RestartGame(){
-
-	}
-	 
-	
-	
-	
-	
-	
-	
 }

@@ -18,9 +18,6 @@ public class GravField : MonoBehaviour {
 	bool beanify = false;
 	public bool PlanetBeanified = false;
 
-	void Awake(){
-	
-	}
 	void OnTriggerEnter2D(Collider2D collider2D){
 		if(collider2D.transform.GetComponentInParent<EnemyMovement>() != null ){
 			amountOfenemies += 1;
