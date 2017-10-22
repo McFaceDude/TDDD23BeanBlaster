@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class EnemyTrigger : MonoBehaviour {
 
-	// Use this for initialization
-
 	EnemyMovement enemyMovement;
 	void Start () {
 		enemyMovement = transform.GetComponentInParent<EnemyMovement>();
@@ -13,9 +11,7 @@ public class EnemyTrigger : MonoBehaviour {
 
 	void OnTriggerExit2D(Collider2D collider2D){
 		if (collider2D.transform.GetComponentsInParent<PlayerMovement>().Length > 0){
-			print("player exited enemy field");
 			enemyMovement.followPLayer = false;
-			
 		}
 	}
 }

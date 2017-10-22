@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour {
 	public bool rightPressed = false;
 	bool didShoot = false;
 
-	float groundMoveVelocity = 80f;
+	float groundMoveVelocity = 40f;
 	float airMoveVelocity = 30f;
 	float jumpVelocity = 600f;	
 	PhysicsObject physicsObject;
@@ -26,10 +26,12 @@ public class PlayerMovement : MonoBehaviour {
 	float projectileRadius;
 	float playerRadius;
 	public UnityEvent PlayerCollisionEvent = new UnityEvent();
+	HpController hpController;
 	
 	bool facingRight{get {return spriteRenderer.flipX; }}
 
 	void Start () {	
+		hpController = GameObject.FindGameObjectWithTag("HpController").transform.GetComponent<HpController>();
 		physicsObject = GetComponent<PhysicsObject>();
 		spriteRenderer = GetComponent<SpriteRenderer>(); 
 		projectileMovement = ProjectilePrefab.GetComponent<ProjectileMovement>();
@@ -120,26 +122,16 @@ public class PlayerMovement : MonoBehaviour {
 	void collidedWithHostile(Collider2D collider2D){
 		GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
 		hp -= 1;
-		
-	
-		if (GameObject.FindGameObjectWithTag("Heart_3") != null){
-			Destroy(GameObject.FindGameObjectWithTag("Heart_3"));
-		}
-		else if(GameObject.FindGameObjectWithTag("Heart_2") != null){
-			Destroy(GameObject.FindGameObjectWithTag("Heart_2"));
-		}
-		else if(GameObject.FindGameObjectWithTag("Heart_1") != null){
-			Destroy(GameObject.FindGameObjectWithTag("Heart_1"));
-		}
+		hpController.removeHp();
 
 		if(hp == 0){
 			//Set the the gameOver boll in camera when the player dies.
 			camera = GameObject.FindGameObjectWithTag("MainCamera");
-			camera.transform.GetComponent<CameraMovementOnPlayer>().GameOver = true;
+			camera.transform.GetComponent<CameraMovement>().GameOver = true;
 			Destroy(gameObject);
 		}
 		//Camera shake when the player collides with enemies.
-		camera.transform.GetComponent<CameraMovementOnPlayer>().Shake();
+		camera.transform.GetComponent<CameraMovement>().Shake();
 		//Add a pushback to the player.
 		Vector2 collisionVector = vectorFromPosition(collider2D.transform);
 		physicsObject.addVelocityVector(collisionVector * collisionPushback);

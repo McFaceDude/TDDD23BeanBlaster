@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GravField : MonoBehaviour {
+	//Handles the gravitational field for planets.
+	//Keeps track on how many enemies there are on a planet and when the planet is beanified.
 
 	public float gravity = 20f;
 	public float planetFriction = 0.05f; 
 	public float atmosphereFriction = 0.01f;
 	 
 	public Sprite BeanifiedPLanet;
-
 	PlayerMovement playerMovement;
 	public GameObject TrampolinePrefab;
 	List<EnemyMovement> enemiesInField = new List<EnemyMovement>();
@@ -60,11 +61,11 @@ public class GravField : MonoBehaviour {
 
 	void planetBeanify(){
 		GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
-		camera.transform.GetComponent<CameraMovementOnPlayer>().ZoomOutForBeanification(transform.position);
+		camera.transform.GetComponent<CameraMovement>().ZoomOutForBeanification(transform.position);
 		transform.GetComponentInParent<SpriteRenderer>().sprite = BeanifiedPLanet;
 		beanify = true;
 		if (transform.parent.transform.gameObject.name == "Planet_2"){
-			camera.transform.GetComponent<CameraMovementOnPlayer>().GameWon = true;
+			camera.transform.GetComponent<CameraMovement>().GameWon = true;
 		}
 
 	}

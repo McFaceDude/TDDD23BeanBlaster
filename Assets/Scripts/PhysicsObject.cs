@@ -47,13 +47,8 @@ public class PhysicsObject : MonoBehaviour {
 	// UpdatePhysics is called by PlayerMovement after all the player input is done at the end of every FixedUpdate 
 	public void UpdateVelocity() {
 		if(InGravField){
-			//print("Velocity= " + velocity);
-			//print(" ");
 			VectorToPlanet = TargetPlanet.position - transform.position;
 			Velocity += PlanetDirection * gravity * Time.deltaTime;
-			
-			//Debug.DrawRay(transform.position, velocity, Color.yellow, 2f);
-
 			xVector = Vector2.Dot(Velocity, PlanetTangentRight)*PlanetTangentRight; 
 			Vector2 yVector = Velocity - xVector; 
 
@@ -66,10 +61,9 @@ public class PhysicsObject : MonoBehaviour {
 			RaycastHit2D hit = Physics2D.Raycast(transform.position, PlanetDirection, raycastDistance, RayMask);
 			IsGrounded = hit;
 			
-			
 			if(hit){
 				if(TargetPlanet.GetComponentInChildren<GravField>().PlanetBeanified == false && gameObject.name == "Player"){
-					camera.transform.GetComponent<CameraMovementOnPlayer>().PlayerView = true;
+					camera.transform.GetComponent<CameraMovement>().PlayerView = true;
 				}
 				Velocity = xVector * (1 - planetFriction * FrictionMultiplier) + (hit.distance - objectRadius) * PlanetDirection;
 				HitEvenet.Invoke();
@@ -112,7 +106,7 @@ public class PhysicsObject : MonoBehaviour {
 		UpdateVelocity();
 	}
 	public void SetTargetPlanet(GravField gravField ){
-
+		//Sets the target planet for collison detection and movement
 		if(gravField != null){
 			TargetPlanet = gravField.transform.parent;
 			this.gravity = gravField.gravity;

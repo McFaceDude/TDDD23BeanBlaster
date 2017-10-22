@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
+	//Handles the enemymovement
+
 	CollisionObject collisionObject;
 	PhysicsObject physicsObject;
 	int collisonPushback = 20;
 	public int hp = 2;
-
 	public bool followPLayer = false;
 	Transform playerTransform;
 	public float moveSpeed = 0.01f;
-
 	public float jumpSpeed = 300;
-
 	Vector3 playerPosition = Vector3.zero;
 
 	// Use this for initialization
@@ -31,10 +30,9 @@ public class EnemyMovement : MonoBehaviour {
 			if (playerTransform != null){
 				moveToPlayer(playerTransform);
 			}
-			
 		}
-		
 	}
+
 	Vector2 vectorFromPosition(Transform fromTransform){
 		return new Vector2(transform.position.x - fromTransform.position.x, transform.position.y - fromTransform.position.y);
 	}
@@ -59,11 +57,9 @@ public class EnemyMovement : MonoBehaviour {
 		if (collider2D.name != "Player"){
 			hp -= 1;
 			physicsObject.addVelocityVector(vectorFromPosition(collider2D.transform) * collisonPushback);
-			
 		}
 		if (hp == 0){
 			physicsObject.TargetPlanet.GetComponentInChildren<GravField>().EnemyDied();
-			
 			Destroy(gameObject);
 		}
 	}

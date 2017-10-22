@@ -39,21 +39,17 @@ public class ProjectileMovement : MonoBehaviour {
 		else {
 			direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * (playerTransform.rotation.eulerAngles.z + 180 - projectileAngle)), Mathf.Sin(Mathf.Deg2Rad * (playerTransform.rotation.eulerAngles.z + 180 - projectileAngle)));
 		}
-		print(playerXVector.magnitude);
 		physicsObject.addVelocityVector(direction * ((projectileForce + playerXVector.magnitude)));
 	}
 
 	void OnTriggerEnter2D(Collider2D field){
-		//print("Collided with gravField");
 		physicsObject.SetTargetPlanet(field.GetComponent<GravField>());
 	}
 	void onCollisionWithPlanet(){
-		//print("collided with planet");
 		Destroy(gameObject);
 	}
 
 	void onCollisionWithEnemy(){
-		//print("collided with enemy");
 		Destroy(gameObject);
 	}
 }

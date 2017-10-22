@@ -3,13 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Icon : MonoBehaviour {
-
+	//Handles the tutorial icons and removes them after a set time.
 	float timer = 11;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {

@@ -52,15 +52,14 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Graphics\Match 3 - Dark Monsters - Infinite Monster Builder\Scritps\OrderPrefabs.cs" />
-     <Compile Include="Assets\Graphics\Simple Vector Icons\Sample\IconPreview.cs" />
-     <Compile Include="Assets\Scripts\CameraMovementOnPlayer.cs" />
+     <Compile Include="Assets\Scripts\CameraMovement.cs" />
      <Compile Include="Assets\Scripts\CollisionObject.cs" />
      <Compile Include="Assets\Scripts\EnemyMovement.cs" />
      <Compile Include="Assets\Scripts\EnemyTrigger.cs" />
      <Compile Include="Assets\Scripts\GravField.cs" />
      <Compile Include="Assets\Scripts\GravObject.cs" />
+     <Compile Include="Assets\Scripts\HpController.cs" />
      <Compile Include="Assets\Scripts\Icon.cs" />
-     <Compile Include="Assets\Scripts\Life.cs" />
      <Compile Include="Assets\Scripts\PhysicsObject.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\ProjectileMovement.cs" />

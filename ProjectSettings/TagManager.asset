@@ -11,6 +11,7 @@ TagManager:
   - Heart_1
   - Heart_2
   - Heart_3
+  - HpController
   layers:
   - Default
   - TransparentFX
